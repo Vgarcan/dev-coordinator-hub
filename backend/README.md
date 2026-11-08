@@ -115,7 +115,9 @@ A sample `.env.example` describes the variables, but **Django does not read it a
 
 The original `SimpleTestCase` checks verify the home template/content and admin login redirect. Separate `repositories/tests.py` database tests cover model validation, the empty state, staff access, and denial for anonymous/non-staff users.
 
-Run `python manage.py makemigrations --check --dry-run` to verify migration consistency, followed by `python manage.py test`. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
+Run `python manage.py makemigrations --check --dry-run` to verify migration consistency, followed by `python manage.py test`.
+
+**Repeatable validation without GitHub Actions:** run `python scripts/verify.py` for standard-library syntax/structure checks. After installing Django, run `python scripts/verify.py --full` to perform Django `check`, migration drift detection, local `migrate`, and the test suite. See [the validation log](VALIDATION.md) for the exact evidence and current blockers. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
 
 The dependency range permits later security patch releases within Django 5.2 LTS, and its minimum is set to **5.2.19** (security release of 3 November 2026). The boilerplate header in `settings.py` intentionally records the **5.2.8** template version used to generate the original scaffold; a maintenance upgrade does not replace its vanilla comments.
 
