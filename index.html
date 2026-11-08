@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c182c">
+  <meta name="description" content="Dev Coordination Hub — interactive, mobile-first UI concept based on Glassmorphism Pro.">
+  <title>Dev Coordination Hub — Interactive Demo</title>
+  <!-- Actual CSS from the user's public GitHub repository. The inline styles
+       below also provide an offline fallback and application-specific layout. -->
+  <link rel="stylesheet" href="https://vgarcan.github.io/botstrap-css-styles/themes/glassmorphism-pro.css">
+  <style>
+    /* Application-only styles. The source theme is loaded separately above.
+       We reuse the theme's semantic and organic-glass design tokens. */
+    :root {
+      --theme-primary: #6742b1;
+      --theme-secondary: #76d0b8;
+      --theme-accent: #e7a4b5;
+      --glass-organic-canvas: #0c182c;
+      --glass-organic-surface: rgba(13,29,53,.56);
+      --glass-organic-edge: rgba(223,241,255,.34);
+      --glass-organic-highlight: rgba(245,252,255,.46);
+      --glass-organic-radius-card: 26px;
+      --glass-organic-elevation: inset 0 1px 0 rgba(255,255,255,.16),0 12px 30px rgba(2,8,24,.22),0 28px 64px rgba(3,9,27,.2);
+      --dc-text: #f4f8ff;
+      --dc-muted: #9baec7;
+      --dc-quiet: #72869f;
+      --dc-glass: rgba(17,35,59,.48);
+      --dc-border: rgba(180,211,244,.15);
+      --dc-teal: #8ae3c8;
+      --dc-violet: #ad9aff;
+      --dc-pink: #f3b2ce;
+      --dc-yellow: #eacb93;
+      --dc-aside: 238px;
+    }
+    * {box-sizing:border-box}
+    html{min-height:100%;scroll-behavior:smooth}
+    body{margin:0;min-height:100vh;background:#0c182c!important;color:var(--dc-text)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;line-height:1.48;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:-15%;z-index:-3;pointer-events:none;background:radial-gradient(ellipse 32% 32% at 88% 16%,rgba(237,140,169,.23),transparent 80%),radial-gradient(ellipse 38% 38% at 10% 70%,rgba(103,205,189,.19),transparent 80%),radial-gradient(ellipse 35% 38% at 54% 46%,rgba(147,130,220,.17),transparent 80%),linear-gradient(145deg,#0b1528,#0c182c 55%,#10162b)}
+    body:after{content:"";position:fixed;z-index:-2;inset:0;pointer-events:none;background:linear-gradient(110deg,rgba(12,24,44,.25),transparent 42%,rgba(12,24,44,.32));}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer;color:inherit}
+    button:disabled{opacity:.42;cursor:not-allowed}
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid var(--dc-teal);outline-offset:3px}
+    .dc-icon{display:inline-flex;flex:none;line-height:0;vertical-align:middle}
+    .dc-icon svg{stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;width:19px;height:19px}
+    .dc-app{display:flex;min-height:100vh}
+    .dc-sidebar{width:var(--dc-aside);position:fixed;z-index:30;inset:0 auto 0 0;display:flex;flex-direction:column;padding:29px 17px 21px 22px;border-right:1px solid rgba(183,216,246,.11);background:rgba(9,22,42,.54);backdrop-filter:blur(24px)}
+    .dc-brand{display:flex;gap:12px;align-items:center;padding:6px 8px 37px}
+    .dc-logo{width:39px;height:39px;display:grid;place-items:center;flex:none;border-radius:13px;background:linear-gradient(138deg,rgba(176,162,255,.34),rgba(118,208,184,.15));border:1px solid rgba(212,227,255,.35);box-shadow:inset 0 1px rgba(255,255,255,.24),0 8px 23px rgba(15,8,53,.27)}
+    .dc-logo .dc-icon svg{width:22px;height:22px;stroke:#e7e0ff;stroke-width:1.9}
+    .dc-brand-name{font-weight:750;letter-spacing:-.8px;font-size:17px;line-height:1.12}
+    .dc-brand-name small{display:block;font-size:9px;font-weight:700;letter-spacing:1.65px;color:var(--dc-muted);margin-top:4px;text-transform:uppercase}
+    .dc-nav-label{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:#798daa;font-weight:700;margin:0 0 12px 13px}
+    .dc-sidebar-nav{display:grid;gap:5px}
+    .dc-nav-item{appearance:none;border:1px solid transparent;display:flex;align-items:center;gap:13px;width:100%;text-align:left;padding:12px 13px;border-radius:12px;background:transparent;color:#aabbd0;font-weight:550;font-size:13px;transition:background .2s,color .2s,border-color .2s}
+    .dc-nav-item:hover{background:rgba(185,209,255,.065);color:#fff}
+    .dc-nav-item.is-active{background:linear-gradient(110deg,rgba(163,149,241,.17),rgba(108,199,196,.075));color:#fff;border-color:rgba(196,209,255,.2);box-shadow:inset 0 1px rgba(255,255,255,.08)}
+    .dc-nav-item.is-active .dc-icon{color:#a9f0d7}
+    .dc-nav-count{margin-left:auto;background:rgba(231,241,255,.095);border:1px solid rgba(231,241,255,.08);color:#d0ddf0;border-radius:7px;padding:1px 6px;font-size:10px}
+    .dc-nav-spacer{height:23px}
+    .dc-side-bottom{margin-top:auto;padding:10px 6px 0}
+    .dc-side-security{border:1px solid rgba(149,211,192,.14);border-radius:15px;background:rgba(59,105,105,.1);padding:14px}
+    .dc-side-security strong{display:flex;gap:8px;align-items:center;color:#cde9e3;font-size:12px;margin-bottom:5px}
+    .dc-side-security p{color:#8da8b8;font-size:11px;margin:0;line-height:1.55}
+    .dc-side-version{display:flex;justify-content:space-between;margin:23px 8px 2px;color:var(--dc-quiet);font-size:11px}
+    .dc-main{margin-left:var(--dc-aside);width:calc(100% - var(--dc-aside));min-width:0;padding:0 clamp(20px,4.1vw,64px) 65px}
+    .dc-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;height:85px;border-bottom:1px solid rgba(201,220,255,.09)}
+    .dc-top-left{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--dc-muted)}
+    .dc-top-left strong{color:#e6eafa;font-weight:600}
+    .dc-top-right{display:flex;gap:12px;align-items:center}
+    .dc-icon-button{width:37px;height:37px;display:grid;place-items:center;border-radius:12px;background:rgba(201,218,255,.05);border:1px solid rgba(201,218,255,.12);color:#c6d3e5}
+    .dc-icon-button:hover{background:rgba(201,218,255,.12)}
+    .dc-pill{display:inline-flex;align-items:center;gap:7px;border-radius:100px;border:1px solid rgba(185,208,242,.17);padding:5px 10px;color:#cad8ec;font-size:11px;font-weight:600;white-space:nowrap;background:rgba(30,55,80,.35)}
+    .dc-pill .dc-dot{width:6px;height:6px;border-radius:50%;background:#8fdac2;box-shadow:0 0 10px rgba(118,208,184,.35)}
+    .dc-pill.amber .dc-dot{background:#e4bc83;box-shadow:none}
+    .dc-pill.violet .dc-dot{background:#b5a2ff}
+    .dc-pill.pink .dc-dot{background:#efa5bd}
+    .dc-pill.subtle{background:rgba(110,145,184,.065)}
+    .dc-avatar{height:35px;width:35px;display:grid;place-items:center;border-radius:50%;border:1px solid rgba(239,228,255,.3);background:linear-gradient(145deg,rgba(175,151,235,.47),rgba(91,171,160,.19));font-size:12px;font-weight:700;color:#fff}
+    .dc-eyebrow{font-size:10px;letter-spacing:2.2px;text-transform:uppercase;color:#a9d7d2;font-weight:750}
+    .dc-hero{display:flex;justify-content:space-between;gap:22px;align-items:center;padding:42px 0 32px;position:relative}
+    .dc-hero h1{font-weight:730;font-size:clamp(30px,3.2vw,45px);letter-spacing:-2px;line-height:1.15;margin:9px 0 11px;color:#f7f9ff}
+    .dc-hero h1 em{font-style:normal;background:linear-gradient(110deg,#a4efd7,#dfd4ff 74%,#f3b6ca);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .dc-hero p{font-size:13px;line-height:1.7;color:#a8bad0;max-width:610px;margin:0}
+    .dc-hero-bubble{width:142px;height:142px;position:relative;flex:none;margin-right:22px;display:grid;place-items:center}
+    .dc-hero-bubble:before{content:"";position:absolute;inset:3px;border-radius:42% 58% 65% 35% / 52% 41% 59% 48%;transform:rotate(-18deg);background:linear-gradient(130deg,rgba(175,159,255,.42),rgba(98,173,165,.15) 52%,rgba(234,141,186,.18));border:1px solid rgba(223,241,255,.44);box-shadow:inset 4px 5px 16px rgba(247,253,255,.15),inset -12px -15px 25px rgba(12,30,50,.36),0 28px 60px rgba(4,8,24,.18);backdrop-filter:blur(13px)}
+    .dc-hero-bubble:after{content:"";position:absolute;inset:26px;border:1px solid rgba(240,250,255,.25);border-radius:50%;transform:rotate(25deg)}
+    .dc-hero-bubble>.dc-icon{position:relative;z-index:2;color:#f4edff}
+    .dc-hero-bubble>.dc-icon svg{height:54px;width:54px;stroke-width:1.1}
+    .dc-hero-glint{position:absolute;z-index:3;top:20px;right:5px;background:#f6dfe5;width:6px;height:6px;border-radius:50%;box-shadow:0 0 16px #efbadf,0 0 36px rgba(255,200,243,.8)}
+    .dc-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(270px,1fr);gap:21px;align-items:start}
+    .dc-stack{display:grid;gap:20px;min-width:0}
+    .dc-panel{position:relative;isolation:isolate;background:linear-gradient(155deg,rgba(32,50,78,.66),rgba(14,30,52,.64) 60%,rgba(15,31,56,.48));border:1px solid rgba(223,241,255,.17);border-radius:24px;box-shadow:var(--glass-organic-elevation);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);overflow:hidden}
+    .dc-panel:before{content:"";position:absolute;pointer-events:none;z-index:-1;inset:0;border-radius:inherit;background:linear-gradient(140deg,rgba(246,252,255,.055),transparent 34%,transparent 78%,rgba(152,226,207,.025))}
+    .dc-panel-inner{padding:24px}
+    .dc-section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:21px}
+    .dc-section-head h2{font-size:16px;font-weight:700;letter-spacing:-.45px;margin:0;color:#f1f7ff}
+    .dc-section-head p{font-size:11px;color:#92a7bf;margin:5px 0 0}
+    .dc-link{border:0;background:transparent;display:inline-flex;gap:5px;align-items:center;color:var(--dc-teal);font-size:11px;font-weight:700;padding:7px 0;white-space:nowrap}
+    .dc-link:hover{color:white}
+    .dc-link .dc-icon svg{width:14px;height:14px}
+    .dc-repo-row{display:flex;align-items:center;gap:14px;min-width:0;padding:2px 0 19px}
+    .dc-repo-icon{height:53px;width:53px;border:1px solid rgba(238,231,255,.24);border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(138,128,227,.27),rgba(88,188,173,.15));flex:none}
+    .dc-repo-icon .dc-icon svg{width:24px;height:24px;stroke:#cfbaff}
+    .dc-repo-info{min-width:0;flex:1}
+    .dc-repo-info strong{display:block;font-size:19px;letter-spacing:-.6px;color:#f4f7fc}
+    .dc-repo-info span{display:block;font-size:11px;color:#8fa9bf;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .dc-separator{height:1px;background:rgba(205,225,255,.12);margin:1px 0}
+    .dc-sub-label{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#8ba5be;font-weight:750;margin:19px 0 12px}
+    .dc-agent-choice-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .dc-agent-choice{display:flex;gap:9px;align-items:center;border:1px solid rgba(195,221,248,.16);border-radius:12px;background:rgba(19,39,64,.56);padding:9px 12px;color:#e0e9f7;font-size:12px;font-weight:650;user-select:none;cursor:pointer;transition:.18s}
+    .dc-agent-choice:hover{border-color:rgba(188,213,242,.32)}
+    .dc-agent-choice input{accent-color:#86d6c5;margin:0;width:15px;height:15px;cursor:pointer}
+    .dc-agent-choice .dc-icon svg{width:16px;height:16px}
+    .dc-action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:22px}
+    .dc-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:rgba(190,211,246,.08);color:#f4f7ff;border:1px solid rgba(210,230,255,.18);border-radius:12px;padding:11px 16px;font-size:12px;font-weight:700;min-height:40px;transition:transform .16s,background .16s,border-color .16s;box-shadow:none;text-decoration:none}
+    .dc-btn:hover:not(:disabled){transform:translateY(-1px);background:rgba(190,211,246,.14)}
+    .dc-btn.primary{color:#102c30;background:linear-gradient(125deg,#a2ecd4,#80d1ba 63%,#7dd2c6);border:1px solid rgba(213,255,241,.8);box-shadow:0 8px 25px rgba(63,186,164,.14)}
+    .dc-btn.primary:hover{background:linear-gradient(125deg,#bcffe8,#88dfca)}
+    .dc-btn.ghost{background:transparent;border-color:transparent;color:#a9bad0}
+    .dc-btn.ghost:hover{color:#fff}
+    .dc-btn .dc-icon svg{width:16px;height:16px}
+    .dc-footnote{font-size:10px;color:var(--dc-quiet);line-height:1.6}
+    .dc-callout{font-size:11px;color:#9fb3c9;padding:12px 13px;background:rgba(135,191,198,.065);border:1px solid rgba(135,191,198,.13);border-radius:12px;line-height:1.6;display:flex;gap:9px;align-items:flex-start}
+    .dc-callout .dc-icon{color:#a5e7d9;margin-top:1px}
+    .dc-callout .dc-icon svg{width:15px;height:15px}
+    .dc-worklist{display:grid;gap:0;margin-top:-6px}
+    .dc-workitem{display:flex;gap:13px;align-items:flex-start;text-align:left;border:0;border-bottom:1px solid rgba(216,233,255,.085);background:none;padding:17px 0;width:100%;min-width:0;transition:background .15s}
+    .dc-workitem:first-child{padding-top:8px}
+    .dc-workitem:last-child{border-bottom:0;padding-bottom:4px}
+    .dc-workitem:hover .dc-worktitle{color:#a9f0dc}
+    .dc-work-icon{width:32px;height:32px;flex:none;border:1px solid rgba(186,219,247,.15);border-radius:10px;display:grid;place-items:center;color:#bdc9de;background:rgba(190,213,247,.055)}
+    .dc-work-icon .dc-icon svg{width:16px;height:16px}
+    .dc-workbody{flex:1;min-width:0}
+    .dc-worktitle{font-size:12px;font-weight:700;color:#f1f6ff;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .15s}
+    .dc-workmeta{font-size:11px;color:#869eb7;margin-top:5px;line-height:1.5}
+    .dc-workitem .dc-pill{font-size:10px;padding:4px 8px}
+    .dc-workitem .dc-icon.chevron{margin-top:3px;color:#7189a7}
+    .dc-righttop{position:relative;padding:22px}
+    .dc-righttop h2{font-size:15px;margin:0;font-weight:720}
+    .dc-server-meta{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin:16px 0 18px}
+    .dc-server-main{font-size:23px;letter-spacing:-1.1px;font-weight:780;line-height:1.2}
+    .dc-server-sub{color:#92a8c0;font-size:11px;margin-top:5px}
+    .dc-pulse{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+    .dc-pulse>div{padding:12px 13px;border-radius:14px;border:1px solid rgba(212,226,250,.11);background:rgba(20,39,65,.36)}
+    .dc-pulse strong{font-size:23px;letter-spacing:-1px;font-weight:760;display:block}
+    .dc-pulse span{font-size:10px;color:#90a6bf}
+    .dc-usage{padding:23px}
+    .dc-usage-top{display:flex;align-items:flex-end;justify-content:space-between;gap:7px;margin-top:17px}
+    .dc-usage-value{font-size:31px;font-weight:760;letter-spacing:-1.2px}
+    .dc-usage-value span{font-size:13px;font-weight:500;color:#a6b9ce}
+    .dc-progress{height:7px;background:rgba(185,214,248,.12);border-radius:20px;overflow:hidden;position:relative;margin:11px 0 9px}
+    .dc-progress>span{display:block;width:62%;height:100%;border-radius:20px;background:linear-gradient(90deg,#86d8c2,#d6bee9)}
+    .dc-progress:after{content:"";position:absolute;top:0;bottom:0;left:80%;border-left:2px solid rgba(245,209,172,.84)}
+    .dc-usage-scale{display:flex;justify-content:space-between;font-size:10px;color:#829ab5}
+    .dc-agent-status{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:15px 0}
+    .dc-agent-status+.dc-agent-status{border-top:1px solid rgba(210,230,255,.1)}
+    .dc-agent-left{display:flex;gap:10px;align-items:center}
+    .dc-agent-mark{height:35px;width:35px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(140deg,rgba(153,136,224,.22),rgba(87,141,161,.19));border:1px solid rgba(207,229,255,.17)}
+    .dc-agent-mark .dc-icon svg{width:18px;height:18px}
+    .dc-agent-left strong{display:block;font-size:12px}
+    .dc-agent-left small{display:block;font-size:10px;color:#8da5bc;margin-top:3px}
+    .dc-feed{display:grid;gap:19px;margin-top:16px}
+    .dc-event{display:grid;grid-template-columns:9px 1fr;gap:13px;align-items:start}
+    .dc-event-marker{height:8px;width:8px;border-radius:50%;margin-top:5px;background:#a698e9;box-shadow:0 0 0 4px rgba(173,154,255,.08)}
+    .dc-event-marker.teal{background:#85dcc8;box-shadow:0 0 0 4px rgba(139,218,195,.08)}
+    .dc-event-marker.pink{background:#e4b0d6;box-shadow:0 0 0 4px rgba(231,166,196,.07)}
+    .dc-event strong{display:block;font-size:11px;color:#e8f0fd;line-height:1.5}
+    .dc-event p{color:#8fa5be;font-size:10px;line-height:1.6;margin:3px 0 0}
+    .dc-event time{display:block;color:#66809a;font-size:10px;margin-top:5px}
+    .dc-view{display:none;animation:dc-reveal .25s ease}
+    .dc-view.is-visible{display:block}
+    @keyframes dc-reveal{from{opacity:.3;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    .dc-grid-repo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+    .dc-repo-card{display:flex;flex-direction:column;gap:14px;padding:22px;text-align:left;color:inherit;min-height:200px;cursor:pointer}
+    .dc-repo-card:hover{border-color:rgba(164,234,213,.47);transform:translateY(-2px);transition:.17s}
+    .dc-repo-card .dc-repo-info strong{font-size:16px}
+    .dc-repo-card .dc-repo-icon{width:44px;height:44px;border-radius:13px}
+    .dc-card-footer{margin-top:auto;display:flex;justify-content:space-between;align-items:center;color:#8ba2b9;font-size:11px}
+    .dc-view-intro{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px}
+    .dc-view-intro h2{font-size:21px;letter-spacing:-.75px;margin:0 0 7px}
+    .dc-view-intro p{margin:0;color:#9db1c9;font-size:12px;line-height:1.7}
+    .dc-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .dc-board-col{min-width:0;padding:16px;border-radius:19px;border:1px solid rgba(194,219,246,.11);background:rgba(11,27,49,.32)}
+    .dc-board-col>header{font-size:12px;font-weight:720;margin:0 0 15px;display:flex;gap:8px;align-items:center}
+    .dc-board-card{padding:15px;border-radius:14px;background:linear-gradient(150deg,rgba(35,53,79,.7),rgba(19,40,64,.64));border:1px solid rgba(207,226,252,.16);margin-bottom:10px;text-align:left;width:100%;display:block}
+    .dc-board-card strong{font-size:12px;display:block;margin-bottom:7px;line-height:1.48}
+    .dc-board-card small{font-size:10px;color:#96abc4;display:block}
+    .dc-board-card .dc-pill{margin-top:12px}
+    .dc-control-card{padding:20px}
+    .dc-agent-detail-row{display:flex;gap:18px;align-items:center;justify-content:space-between}
+    .dc-toggle{display:inline-flex;cursor:pointer;align-items:center;gap:9px;color:#91a9c1;font-size:11px}
+    .dc-toggle input{width:32px;height:18px;accent-color:#78d8c0;cursor:pointer}
+    .dc-field{display:grid;gap:7px;margin-bottom:15px}
+    .dc-field label{font-size:11px;color:#b6c9df;font-weight:650}
+    .dc-input{width:100%;background:rgba(8,24,47,.6);border:1px solid rgba(207,229,255,.2);border-radius:12px;padding:12px;color:#f5f9ff;font-size:13px;outline:none;resize:vertical}
+    .dc-input:focus{border-color:rgba(144,226,205,.75)}
+    .dc-input::placeholder{color:#70849c}
+    .dc-input option{background:#142b47;color:white}
+    .dc-modal-shade{position:fixed;z-index:100;inset:0;background:rgba(3,12,27,.72);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+    .dc-modal-shade.show{display:flex}
+    .dc-modal{width:min(510px,100%);padding:24px;max-height:88vh;overflow:auto}
+    .dc-modal-title{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:18px}
+    .dc-modal-title h2{margin:0;font-size:19px;letter-spacing:-.6px}
+    .dc-detail-shade{position:fixed;inset:0;background:rgba(3,12,27,.65);z-index:90;display:none}
+    .dc-detail-shade.show{display:block}
+    .dc-detail{position:fixed;right:0;top:0;bottom:0;z-index:91;width:min(470px,100%);padding:27px;background:linear-gradient(145deg,rgba(27,46,75,.96),rgba(10,25,46,.97));box-shadow:-20px 0 80px rgba(0,0,0,.35);border-left:1px solid rgba(204,230,255,.17);transform:translateX(101%);transition:transform .24s;overflow:auto}
+    .dc-detail.show{transform:translateX(0)}
+    .dc-detail h2{font-size:24px;line-height:1.25;letter-spacing:-.8px;margin:12px 0}
+    .dc-detail p{color:#a7bad0;font-size:13px;line-height:1.75}
+    .dc-detail .dc-section-head{margin-bottom:8px}
+    .dc-detail-section{padding:17px 0;border-top:1px solid rgba(204,230,255,.1)}
+    .dc-detail-section strong{font-size:11px;color:#c5d7ea;text-transform:uppercase;letter-spacing:1px}
+    .dc-detail-section div{font-size:12px;color:#a9bfd1;margin-top:7px;line-height:1.6}
+    .dc-toast{position:fixed;z-index:120;right:22px;bottom:22px;max-width:380px;display:flex;gap:11px;align-items:center;padding:13px 16px;border-radius:13px;background:#1b3a4a;border:1px solid rgba(169,240,214,.32);box-shadow:0 18px 50px #04101a99;color:#e4f8f3;font-size:12px;opacity:0;transform:translateY(12px);pointer-events:none;transition:.22s}
+    .dc-toast.show{opacity:1;transform:translateY(0)}
+    .dc-mobilebar{display:none}
+    .dc-mobile-menu-button{display:none}
+    .dc-table{width:100%;border-collapse:collapse;text-align:left;font-size:12px}
+    .dc-table td,.dc-table th{border-bottom:1px solid rgba(204,230,255,.11);padding:13px 8px;vertical-align:middle}
+    .dc-table th{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#8ba4bd}
+    .dc-table td{color:#c4d2e4}
+    .dc-table tr:last-child td{border:0}
+    .dc-logo-orbit{transform:rotate(-8deg)}
+    @media (max-width:1210px){.dc-layout{grid-template-columns:minmax(0,1.3fr) minmax(248px,1fr)}.dc-hero-bubble{margin-right:0;width:110px;height:110px}.dc-hero-bubble>.dc-icon svg{width:42px;height:42px}.dc-main{padding-left:28px;padding-right:28px}.dc-panel-inner{padding:21px}}
+    @media (max-width:1020px){.dc-layout{grid-template-columns:1fr}.dc-rightcol{display:grid;grid-template-columns:1fr 1fr;gap:18px}.dc-rightcol .dc-stack{gap:18px}.dc-sidebar{width:215px}.dc-main{margin-left:215px;width:calc(100% - 215px)}.dc-hero-bubble{display:none}.dc-grid-repo{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:760px){
+      .dc-sidebar{display:none}.dc-main{margin:0;width:100%;padding:0 16px 95px}.dc-topbar{height:65px}.dc-top-left{font-size:11px;white-space:nowrap}.dc-top-left>span{display:none}.dc-top-right{gap:8px}.dc-top-right .dc-pill{font-size:10px;padding:5px 8px}.dc-avatar{height:31px;width:31px}.dc-mobile-menu-button{display:grid}.dc-hero{padding:31px 4px 25px}.dc-hero h1{font-size:33px;letter-spacing:-1.5px}.dc-hero p{font-size:12px}.dc-layout{gap:15px}.dc-stack{gap:15px}.dc-panel{border-radius:20px}.dc-panel-inner{padding:19px}.dc-repo-info strong{font-size:17px}.dc-repo-icon{width:48px;height:48px}.dc-rightcol{grid-template-columns:1fr;gap:15px}.dc-mobilebar{display:flex;z-index:50;position:fixed;bottom:0;left:0;right:0;background:rgba(10,23,43,.94);border-top:1px solid rgba(218,237,255,.16);backdrop-filter:blur(22px);padding:8px 5px max(9px,env(safe-area-inset-bottom));justify-content:space-around}.dc-mobile-nav{display:grid;justify-items:center;gap:4px;color:#89a0b8;font-size:9px;font-weight:600;border:0;background:none;min-width:61px;padding:6px 4px}.dc-mobile-nav.is-active{color:#abe8d6}.dc-mobile-nav .dc-icon svg{width:20px;height:20px}.dc-grid-repo{grid-template-columns:1fr}.dc-board{grid-template-columns:1fr}.dc-board-col{padding:15px}.dc-view-intro{flex-wrap:wrap}.dc-toast{left:16px;right:16px;bottom:88px}.dc-modal{padding:20px}.dc-table{font-size:10px}.dc-table td,.dc-table th{padding:11px 5px}
+    }
+    @media (max-width:380px){.dc-main{padding-left:12px;padding-right:12px}.dc-hero h1{font-size:29px}.dc-repo-row{gap:10px}.dc-repo-info strong{font-size:15px}.dc-agent-choice-row{gap:7px}.dc-agent-choice{padding:8px 9px}.dc-btn{padding:10px 12px}}
+    @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<div class="dc-app" id="app">
+  <aside class="dc-sidebar" aria-label="Main navigation">
+    <div class="dc-brand"><div class="dc-logo"><span data-icon="orbit"></span></div><div class="dc-brand-name">DevHub <small>Control plane</small></div></div>
+    <p class="dc-nav-label">Workspace</p>
+    <nav class="dc-sidebar-nav">
+      <button class="dc-nav-item is-active" data-nav="overview"><span data-icon="layout-dashboard"></span>Overview</button>
+      <button class="dc-nav-item" data-nav="repositories"><span data-icon="folder-git"></span>Repositories</button>
+      <button class="dc-nav-item" data-nav="board"><span data-icon="kanban"></span>Work board <span class="dc-nav-count" id="nav-task-count">3</span></button>
+      <button class="dc-nav-item" data-nav="agents"><span data-icon="bot"></span>Agents</button>
+      <button class="dc-nav-item" data-nav="activity"><span data-icon="activity"></span>Activity</button>
+    </nav>
+    <div class="dc-nav-spacer"></div><p class="dc-nav-label">System</p>
+    <nav class="dc-sidebar-nav"><button class="dc-nav-item" data-nav="settings"><span data-icon="shield"></span>Security & limits</button></nav>
+    <div class="dc-side-bottom"><div class="dc-side-security"><strong><span data-icon="lock"></span> Private by design</strong><p>GitHub is the secure bridge. No public inbound API or root access required.</p></div><div class="dc-side-version"><span>Public UI demo</span><span>v0.1</span></div></div>
+  </aside>
+  <main class="dc-main">
+    <header class="dc-topbar"><div class="dc-top-left"><button class="dc-icon-button dc-mobile-menu-button" id="mobile-repos" title="Choose repository" aria-label="Choose repository"><span data-icon="layers"></span></button><span>Workspace</span><span style="color:#657990">/</span><strong id="crumb-name">Python App</strong></div><div class="dc-top-right"><span class="dc-pill"><span class="dc-dot"></span> PUBLIC DEMO · SIMULATED</span><button class="dc-icon-button" id="top-github" title="Open source GitHub project"><span data-icon="github"></span></button><div class="dc-avatar" aria-label="Sample profile">D</div></div></header>
+
+    <section class="dc-view is-visible" data-view="overview">
+      <div class="dc-hero"><div><div class="dc-eyebrow">YOUR PRIVATE DEVELOPMENT WORKSPACE</div><h1>Build together.<br><em>Stay in control.</em></h1><p>One quiet place to coordinate Codex, Claude and your GitHub repositories. Approve the plan from ChatGPT; your Linux server takes care of the handoff.</p></div><div class="dc-hero-bubble" aria-hidden="true"><span data-icon="orbit"></span><span class="dc-hero-glint"></span></div></div>
+      <div class="dc-layout">
+        <div class="dc-stack">
+          <section class="dc-panel card"><div class="dc-panel-inner"><div class="dc-section-head"><div><h2>Current workspace</h2><p>Pick a repository and the agents available for this session</p></div><span class="dc-pill"><span class="dc-dot"></span> Ready</span></div>
+            <div class="dc-repo-row"><div class="dc-repo-icon"><span data-icon="code-2"></span></div><div class="dc-repo-info"><strong id="current-repo-name">Python App</strong><span id="current-repo-slug">example-org / python-app · main (demo)</span></div><button class="dc-icon-button" id="choose-repo" title="Switch repository" aria-label="Switch repository"><span data-icon="chevrons-up-down"></span></button></div>
+            <div class="dc-separator"></div><div class="dc-sub-label">Available agents</div>
+            <div class="dc-agent-choice-row"><label class="dc-agent-choice"><input id="overview-codex" type="checkbox" checked><span data-icon="terminal"></span>Codex CLI</label><label class="dc-agent-choice"><input id="overview-claude" type="checkbox" checked><span data-icon="sparkles"></span>Claude Code</label><span class="dc-pill subtle">CLI · No VS Code</span></div>
+            <div class="dc-action-row"><button class="dc-btn primary" data-action="new-change"><span data-icon="plus"></span> New change</button><button class="dc-btn" data-action="board"><span data-icon="kanban"></span> View work board</button></div>
+          </div></section>
+          <section class="dc-panel card"><div class="dc-panel-inner"><div class="dc-section-head"><div><h2>Work in progress</h2><p>Tasks, handoffs and decisions in one queue</p></div><button class="dc-link" data-action="board">Open board <span data-icon="arrow-up-right"></span></button></div><div class="dc-worklist" id="overview-worklist"></div></div></section>
+          <div class="dc-callout"><span data-icon="info"></span><div><strong>Preview mode.</strong> The data and controls on this page are illustrative. This prototype does not connect to your Linux server, GitHub or paid AI subscriptions.</div></div>
+        </div>
+        <div class="dc-stack dc-rightcol">
+          <section class="dc-panel card"><div class="dc-righttop"><div class="dc-section-head" style="margin-bottom:4px"><h2>Server pulse</h2><span class="dc-pill"><span class="dc-dot"></span> Simulated</span></div><div class="dc-server-meta"><div><div class="dc-server-main">Linux host</div><div class="dc-server-sub">Headless · outbound GitHub bridge</div></div><span data-icon="server" style="color:#a1d6d1;margin-top:2px"></span></div><div class="dc-separator"></div><div class="dc-pulse"><div><strong id="metric-tasks">3</strong><span>Open tasks</span></div><div><strong>2</strong><span>Agents configured</span></div></div></div></section>
+          <section class="dc-panel card"><div class="dc-usage"><div class="dc-section-head" style="margin-bottom:0"><h2>Usage guardrails</h2><span data-icon="gauge" style="color:#b6a4f5"></span></div><div class="dc-usage-top"><div class="dc-usage-value">62<span>% estimated</span></div><span class="dc-pill amber"><span class="dc-dot"></span> 80% target</span></div><div class="dc-progress"><span></span></div><div class="dc-usage-scale"><span>Current estimate</span><span>Reserve 20%</span></div><p class="dc-footnote" style="margin:15px 0 0">Subscription quotas may not expose exact usage. A real safeguard must include task and retry limits.</p></div></section>
+          <section class="dc-panel card"><div class="dc-panel-inner"><div class="dc-section-head"><div><h2>Your dev team</h2><p>CLI workers configured on Linux</p></div><button class="dc-link" data-action="agents">Manage <span data-icon="arrow-up-right"></span></button></div><div id="team-status"></div></div></section>
+          <section class="dc-panel card"><div class="dc-panel-inner"><div class="dc-section-head"><div><h2>Latest activity</h2><p>A shared trace of every handoff</p></div><button class="dc-link" data-action="activity">All events <span data-icon="arrow-up-right"></span></button></div><div class="dc-feed" id="activity-preview"></div></div></section>
+        </div>
+      </div>
+    </section>
+
+    <section class="dc-view" data-view="repositories">
+      <div class="dc-hero"><div><div class="dc-eyebrow">PROJECT LIBRARY</div><h1>Choose your <em>workspace.</em></h1><p>No setup ceremony. Select an existing repository or prepare a new GitHub import.</p></div><div class="dc-hero-bubble"><span data-icon="folder-git"></span></div></div>
+      <div class="dc-view-intro"><div><h2>Repositories</h2><p>Each repository has its own tasks and isolated execution workspaces.</p></div><button class="dc-btn primary" data-action="import"><span data-icon="plus"></span> Add repository</button></div><div class="dc-grid-repo" id="repo-grid"></div>
+    </section>
+
+    <section class="dc-view" data-view="board">
+      <div class="dc-hero"><div><div class="dc-eyebrow">COORDINATED EXECUTION</div><h1>Work without <em>the noise.</em></h1><p>Codex and Claude exchange structured results. The coordinator manages dependencies; you approve important decisions.</p></div><div class="dc-hero-bubble"><span data-icon="kanban"></span></div></div>
+      <div class="dc-view-intro"><div><h2>Work board</h2><p id="board-repo-subtitle">Python App · Demo tasks and approvals</p></div><button class="dc-btn primary" data-action="new-change"><span data-icon="plus"></span> New change</button></div><div class="dc-board" id="board-columns"></div>
+    </section>
+
+    <section class="dc-view" data-view="agents">
+      <div class="dc-hero"><div><div class="dc-eyebrow">TEAM OPERATIONS</div><h1>Your agents. <em>Your rules.</em></h1><p>Choose who can work on the selected repository. Idle CLI workers do not need a constantly running model.</p></div><div class="dc-hero-bubble"><span data-icon="bot"></span></div></div>
+      <div class="dc-grid-repo" id="agent-config-cards"></div>
+    </section>
+
+    <section class="dc-view" data-view="activity">
+      <div class="dc-hero"><div><div class="dc-eyebrow">AUDIT TRAIL</div><h1>Know what <em>happened.</em></h1><p>Every task, review and approval belongs to the right workspace. No hunting through three separate chat histories.</p></div><div class="dc-hero-bubble"><span data-icon="activity"></span></div></div>
+      <section class="dc-panel"><div class="dc-panel-inner"><div class="dc-section-head"><div><h2>Activity stream</h2><p>Latest first · Mock events</p></div><span class="dc-pill subtle" id="activity-counter">3 events</span></div><div class="dc-feed" id="activity-full"></div></div></section>
+    </section>
+
+    <section class="dc-view" data-view="settings">
+      <div class="dc-hero"><div><div class="dc-eyebrow">SAFE BY DEFAULT</div><h1>Security <em>is the foundation.</em></h1><p>Least privilege, explicit approvals and outbound-only communication are designed into the coordinator from day one.</p></div><div class="dc-hero-bubble"><span data-icon="shield"></span></div></div>
+      <div class="dc-grid-repo"><section class="dc-panel dc-control-card"><div class="dc-section-head"><h2>GitHub bridge</h2><span class="dc-pill"><span class="dc-dot"></span> Planned</span></div><div class="dc-callout"><span data-icon="lock"></span>Use private GitHub issues/comments as the coordination channel. No inbound ports required in MVP.</div><div class="dc-sub-label">Inbound API</div><strong style="font-size:16px">Disabled by design</strong><p class="dc-footnote">Server polls authorized GitHub items through outbound HTTPS.</p></section><section class="dc-panel dc-control-card"><div class="dc-section-head"><h2>Execution limits</h2><span class="dc-pill amber"><span class="dc-dot"></span> Concept</span></div><table class="dc-table"><tr><td>Target quota reserve</td><td style="text-align:right;color:#f3f9ff">20%</td></tr><tr><td>Retries per task</td><td style="text-align:right;color:#f3f9ff">2</td></tr><tr><td>Approval to merge</td><td style="text-align:right;color:#9de3cd">Required</td></tr><tr><td>Root access for agents</td><td style="text-align:right;color:#9de3cd">Forbidden</td></tr></table></section></div>
+    </section>
+  </main>
+  <nav class="dc-mobilebar" aria-label="Mobile navigation"><button class="dc-mobile-nav is-active" data-nav="overview"><span data-icon="layout-dashboard"></span>Home</button><button class="dc-mobile-nav" data-nav="repositories"><span data-icon="folder-git"></span>Repos</button><button class="dc-mobile-nav" data-nav="board"><span data-icon="kanban"></span>Tasks</button><button class="dc-mobile-nav" data-nav="agents"><span data-icon="bot"></span>Agents</button><button class="dc-mobile-nav" data-nav="activity"><span data-icon="activity"></span>Feed</button></nav>
+</div>
+
+<div class="dc-modal-shade" id="modal-shade" role="presentation"><div class="dc-modal dc-panel" role="dialog" aria-modal="true" aria-labelledby="modal-heading"><div class="dc-modal-title"><h2 id="modal-heading">New change</h2><button class="dc-icon-button" id="modal-close" aria-label="Close"><span data-icon="x"></span></button></div><div id="modal-content"></div></div></div>
+<div class="dc-detail-shade" id="detail-shade"></div><aside class="dc-detail" id="task-detail" role="dialog" aria-modal="true" aria-label="Task details"><div id="detail-content"></div></aside>
+<div class="dc-toast" id="toast" role="status" aria-live="polite"><span data-icon="check-circle"></span><span id="toast-text">Updated</span></div>
+
+<script>
+/**
+ * Static concept app: no fetch, no tokens, no subprocesses and no real GitHub
+ * writes. Changes live only in this browser tab. An eventual Django app will
+ * replace this in-memory state with authenticated server-side operations.
+ */
+(function () {
+  'use strict';
+  const paths = {
+    'orbit':'<circle cx="12" cy="12" r="2.2"/><ellipse cx="12" cy="12" rx="10" ry="4.7" transform="rotate(33 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.7" transform="rotate(-33 12 12)"/>',
+    'layout-dashboard':'<rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="10" width="8" height="11" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/>',
+    'folder-git':'<path d="M3 7V5a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="10" cy="12" r="1"/><circle cx="14" cy="16" r="1"/><path d="M10 13v3h4"/>',
+    'kanban':'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M5.5 7h1M11.5 7h1M17.5 7h1M11.5 11h1"/>',
+    'bot':'<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4m-2 0h4M2 12v4m20-4v4"/><circle cx="9" cy="14" r="1"/><circle cx="15" cy="14" r="1"/><path d="M9 18h6"/>',
+    'activity':'<path d="M2 12h4l3-7 5 14 3-7h5"/>',
+    'shield':'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+    'lock':'<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+    'layers':'<path d="m12 2 9 5-9 5-9-5 9-5Zm-9 10 9 5 9-5M3 17l9 5 9-5"/>',
+    'github':'<path d="M9 19c-4 1-4-2-6-2m12 4v-3.1a3.1 3.1 0 0 0-.8-2.4c2.7-.3 5.5-1.3 5.5-6.2a4.8 4.8 0 0 0-1.3-3.3 4.3 4.3 0 0 0-.1-3.3s-1 0-3.4 1.8a11.8 11.8 0 0 0-6.2 0C6.3 2.7 5.3 2.7 5.3 2.7a4.3 4.3 0 0 0-.1 3.3A4.8 4.8 0 0 0 4 9.3c0 4.9 2.8 5.9 5.5 6.2a3.1 3.1 0 0 0-.8 2.4V21"/>',
+    'terminal':'<rect x="2" y="3" width="20" height="18" rx="2"/><path d="m6 9 3 3-3 3m6 0h5"/>',
+    'sparkles':'<path d="m12 3 1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3ZM5 17l.6 2.4L8 20l-2.4.6L5 23l-.6-2.4L2 20l2.4-.6L5 17ZM19 2l.5 2L22 4.5 19.5 5 19 7l-.5-2L16 4.5l2.5-.5L19 2Z"/>',
+    'code-2':'<path d="m8 8-4 4 4 4m8-8 4 4-4 4m-3-15-3 18"/>',
+    'chevrons-up-down':'<path d="m7 10 5-5 5 5m-10 4 5 5 5-5"/>',
+    'plus':'<path d="M12 5v14M5 12h14"/>',
+    'arrow-up-right':'<path d="M7 17 17 7M7 7h10v10"/>',
+    'server':'<rect x="3" y="3" width="18" height="8" rx="2"/><rect x="3" y="13" width="18" height="8" rx="2"/><path d="M7 7h.01M7 17h.01M11 7h7M11 17h7"/>',
+    'gauge':'<path d="M12 14 16 9M5 20a10 10 0 1 1 14 0M12 18h.01"/>',
+    'info':'<circle cx="12" cy="12" r="10"/><path d="M12 11v5m0-8h.01"/>',
+    'git-pull-request':'<circle cx="6" cy="3" r="2"/><path d="M6 5v12"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="7" r="2"/><path d="M18 9v3a5 5 0 0 1-5 5h-2M18 5V3"/>',
+    'clock':'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    'check-circle':'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+    'arrow-right':'<path d="M5 12h14m-7-7 7 7-7 7"/>',
+    'x':'<path d="M18 6 6 18M6 6l12 12"/>',
+    'search':'<circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5 5"/>',
+    'check':'<path d="m5 12 4 4L19 6"/>',
+    'pause':'<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>',
+    'refresh':'<path d="M21 12a9 9 0 0 1-15.4 6.4M3 12A9 9 0 0 1 18.4 5.6M21 4v5h-5M3 20v-5h5"/>',
+    'file-code':'<path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-7-7Zm0 0v7h7M9 14l-2 2 2 2m6-4 2 2-2 2"/>'
+  };
+  function icon(name) {return `<span class="dc-icon"><svg aria-hidden="true" viewBox="0 0 24 24">${paths[name]||paths.info}</svg></span>`}
+  function icons(root=document) {root.querySelectorAll('[data-icon]').forEach(el=>{el.outerHTML=icon(el.getAttribute('data-icon'))})}
+  // Escape all data rendered into HTML. In production this must also be
+  // validated server-side; the mock keeps input scoped to browser memory.
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const repos=[
+    {id:'aihub',name:'Python App',slug:'example-org / python-app · main (demo)',description:'Example Django application and automated tests',lang:'Python · Django',private:true},
+    {id:'bootstrap',name:'Design System',slug:'example-org / design-system · main (demo)',description:'Example frontend library and responsive components',lang:'CSS · JavaScript',private:false},
+    {id:'minecraft',name:'Container Service',slug:'example-org / container-service · main (demo)',description:'Example container automation and maintenance',lang:'Shell · Docker',private:false}
+  ];
+  const state={repo:'aihub',agents:{codex:true,claude:true},tasks:[
+    {id:'CHG-042',repo:'aihub',title:'Add pagination regression tests',status:'review',owner:'Codex review',summary:'Add tests that cover boundary cases and failure paths for example paginated views.',scope:'Example pagination functions and tests',criteria:'Page boundaries and invalid query parameters are tested; no regressions are introduced.'},
+    {id:'CHG-043',repo:'aihub',title:'Improve upload validation',status:'running',owner:'Claude Code',summary:'Validate file types and reject malformed example upload payloads.',scope:'Example file upload endpoint',criteria:'Unsupported files are rejected and existing tests still pass.'},
+    {id:'CHG-044',repo:'aihub',title:'Approve deployment policy',status:'approval',owner:'Owner decision',summary:'Review the example deployment rules before implementation.',scope:'Deployment permissions',criteria:'An approved deployment policy with clear permission boundaries.'},
+    {id:'CHG-045',repo:'bootstrap',title:'Review mobile navigation',status:'review',owner:'Codex review',summary:'Review responsive navigation and keyboard focus at phone and tablet sizes.',scope:'Example navigation components',criteria:'Visual and accessibility review on the example app.'},
+    {id:'CHG-046',repo:'minecraft',title:'Document backup recovery',status:'running',owner:'Claude Code',summary:'Describe a recoverable backup flow for example container volumes.',scope:'Docker backups',criteria:'Backup and restore steps documented and tested on nonproduction files.'}
+  ], events:[
+    {title:'Example review requested',detail:'CHG-042 · Pagination test review',when:'10 minutes ago',tone:''},
+    {title:'Example implementation prepared',detail:'CHG-043 · Upload validation',when:'32 minutes ago',tone:'teal'},
+    {title:'GitHub bridge received a task',detail:'CHG-044 · Awaiting your decision',when:'1 hour ago',tone:'pink'}
+  ]};
+  const statusMap={review:{label:'In review',tone:'violet'},running:{label:'In progress',tone:''},approval:{label:'Needs approval',tone:'amber'},queued:{label:'Queued',tone:'subtle'},done:{label:'Complete',tone:''}};
+  const $=(s,root=document)=>root.querySelector(s);
+  const $$=(s,root=document)=>Array.from(root.querySelectorAll(s));
+  const repo=()=>repos.find(r=>r.id===state.repo);
+  const tasks=()=>state.tasks.filter(t=>t.repo===state.repo);
+  let toastTimer;
+  function toast(text){$('#toast-text').textContent=text;$('#toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),3200)}
+  function showView(view){$$('[data-view]').forEach(el=>el.classList.toggle('is-visible',el.dataset.view===view));$$('[data-nav]').forEach(el=>{const on=el.dataset.nav===view;el.classList.toggle('is-active',on);if(on)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current')});window.scrollTo({top:0,behavior:'smooth'})}
+  function setRepo(id){if(!repos.some(r=>r.id===id))return;state.repo=id;render();showView('overview');toast(`Workspace changed to ${repo().name}`)}
+  function pill(status){const st=statusMap[status]||statusMap.queued;return `<span class="dc-pill ${st.tone}"><span class="dc-dot"></span>${st.label}</span>`}
+  function renderWork(){const list=tasks();$('#metric-tasks').textContent=list.filter(t=>t.status!=='done').length;$('#nav-task-count').textContent=list.filter(t=>t.status!=='done').length;$('#overview-worklist').innerHTML=list.length?list.slice(0,4).map(t=>`<button class="dc-workitem" data-task="${esc(t.id)}"><span class="dc-work-icon">${icon(t.status==='review'?'git-pull-request':t.status==='approval'?'clock':'code-2')}</span><span class="dc-workbody"><span class="dc-worktitle">${esc(t.title)}</span><span class="dc-workmeta">${esc(t.id)} · ${esc(t.owner)}</span></span>${pill(t.status)}<span class="dc-icon chevron">${icon('arrow-right')}</span></button>`).join(''):`<p class="dc-footnote">No tasks in this repository yet. Create your first change to get started.</p>`}
+  function renderTeam(){const statuses=[{key:'codex',name:'Codex CLI',role:'Implementation & code review',ic:'terminal'},{key:'claude',name:'Claude Code',role:'Implementation & analysis',ic:'sparkles'}];$('#team-status').innerHTML=statuses.map(a=>`<div class="dc-agent-status"><div class="dc-agent-left"><div class="dc-agent-mark">${icon(a.ic)}</div><div><strong>${a.name}</strong><small>${a.role}</small></div></div><span class="dc-pill ${state.agents[a.key]?'':'amber'}"><span class="dc-dot"></span>${state.agents[a.key]?'Selected':'Disabled'}</span></div>`).join('');$('#overview-codex').checked=state.agents.codex;$('#overview-claude').checked=state.agents.claude}
+  function renderEvents(){const html=state.events.map(e=>`<div class="dc-event"><span class="dc-event-marker ${e.tone||''}"></span><div><strong>${esc(e.title)}</strong><p>${esc(e.detail)}</p><time>${esc(e.when)}</time></div></div>`).join('');$('#activity-preview').innerHTML=state.events.slice(0,3).map(e=>`<div class="dc-event"><span class="dc-event-marker ${e.tone||''}"></span><div><strong>${esc(e.title)}</strong><p>${esc(e.detail)}</p><time>${esc(e.when)}</time></div></div>`).join('');$('#activity-full').innerHTML=html;$('#activity-counter').textContent=state.events.length+' events'}
+  function renderRepos(){$('#repo-grid').innerHTML=repos.map(r=>`<button class="dc-panel dc-repo-card" data-repo="${r.id}"><div style="display:flex;align-items:center;gap:12px"><span class="dc-repo-icon">${icon('folder-git')}</span><div class="dc-repo-info"><strong>${esc(r.name)}</strong><span>${esc(r.lang)}</span></div></div><div style="font-size:12px;color:#a5b9d0;line-height:1.65">${esc(r.description)}</div><div class="dc-card-footer"><span>${r.private?'Private workspace':'GitHub repository'}</span><span>${state.repo===r.id?'Selected ✓':'Open →'}</span></div></button>`).join('')}
+  function renderBoard(){const groups=[{status:'queued',title:'Planned'},{status:'running',title:'In progress'},{status:'review',title:'In review'},{status:'approval',title:'Approval required'}];$('#board-columns').innerHTML=groups.map(g=>{let inner=tasks().filter(t=>t.status===g.status);return `<section class="dc-board-col"><header><span class="dc-dot" style="display:inline-block;background:${g.status==='approval'?'#e4bc83':g.status==='running'?'#8fdac2':'#b5a2ff'};height:7px;width:7px;border-radius:50%"></span>${g.title} <span style="margin-left:auto;color:#758faa">${inner.length}</span></header>${inner.map(t=>`<button class="dc-board-card" data-task="${esc(t.id)}"><strong>${esc(t.title)}</strong><small>${esc(t.id)} · ${esc(t.owner)}</small>${pill(t.status)}</button>`).join('')||'<p class="dc-footnote">Nothing here</p>'}</section>`}).join('')}
+  function renderAgentCards(){const defs=[{key:'codex',name:'Codex CLI',icon:'terminal',role:'Implementation, reviews, tests',detail:'Installed on Linux · session health must be verified',status:'Subscription access not tested'},{key:'claude',name:'Claude Code',icon:'sparkles',role:'Implementation, research, analysis',detail:'Company entitlement and CLI permissions must be verified',status:'Subscription access not tested'}];$('#agent-config-cards').innerHTML=defs.map(a=>`<section class="dc-panel dc-control-card"><div class="dc-agent-detail-row"><div class="dc-agent-left"><div class="dc-agent-mark">${icon(a.icon)}</div><div><strong style="font-size:15px">${a.name}</strong><small>${a.role}</small></div></div><label class="dc-toggle"><input type="checkbox" data-agent-toggle="${a.key}" ${state.agents[a.key]?'checked':''} aria-label="Enable ${a.name}"> ${state.agents[a.key]?'Enabled':'Disabled'}</label></div><div class="dc-separator" style="margin:18px 0 13px"></div><p class="dc-footnote">${a.detail}</p><div class="dc-pill subtle" style="margin-top:12px">${a.status}</div></section>`).join('')}
+  function render(){const r=repo();$('#crumb-name').textContent=r.name;$('#current-repo-name').textContent=r.name;$('#current-repo-slug').textContent=r.slug;$('#board-repo-subtitle').textContent=r.name+' · Active work and approvals';renderWork();renderTeam();renderRepos();renderBoard();renderEvents();renderAgentCards()}
+  function addEvent(title,detail,tone='teal'){state.events.unshift({title,detail,when:'Just now',tone});renderEvents()}
+  function openModal(kind){const content=$('#modal-content');$('#modal-heading').textContent=kind==='new-change'?'Create a change':kind==='import'?'Add a repository':'Choose a repository';
+    if(kind==='new-change')content.innerHTML=`<form id="new-change-form"><div class="dc-callout" style="margin-bottom:17px">${icon('info')}This is a local UI simulation. Registering this change will not call GitHub or execute an agent.</div><div class="dc-field"><label for="change-title">What do you want to improve?</label><input id="change-title" class="dc-input" maxlength="100" placeholder="e.g. Improve RAG import reliability" required></div><div class="dc-field"><label for="change-description">Brief objective</label><textarea id="change-description" class="dc-input" rows="3" maxlength="700" placeholder="Describe the outcome, not all the implementation details" required></textarea></div><div class="dc-field"><label for="change-agent">First assignment</label><select id="change-agent" class="dc-input"><option>Coordinator decides</option><option>Codex CLI</option><option>Claude Code</option></select></div><div class="dc-action-row"><button class="dc-btn primary" type="submit">${icon('plus')} Register demo task</button><button class="dc-btn ghost" type="button" data-action="close-modal">Cancel</button></div></form>`;
+    else if(kind==='import')content.innerHTML=`<form id="import-form"><div class="dc-callout" style="margin-bottom:17px">${icon('shield')}A real import would check GitHub permissions, clone safely, then inspect the project before executing code.</div><div class="dc-field"><label for="import-url">GitHub repository URL</label><input id="import-url" class="dc-input" type="url" placeholder="https://github.com/owner/repository" required></div><div class="dc-action-row"><button class="dc-btn primary" type="submit">${icon('folder-git')} Preview import</button><button class="dc-btn ghost" type="button" data-action="close-modal">Cancel</button></div></form>`;
+    else content.innerHTML=`<div style="display:grid;gap:9px">${repos.map(r=>`<button class="dc-board-card" data-repo="${r.id}" style="display:flex;align-items:center;gap:12px"><span class="dc-repo-icon" style="width:40px;height:40px">${icon('folder-git')}</span><span style="flex:1;text-align:left"><strong>${esc(r.name)}</strong><small>${esc(r.lang)}</small></span>${state.repo===r.id?icon('check'):icon('arrow-right')}</button>`).join('')}</div><div class="dc-action-row"><button class="dc-btn" data-action="import">${icon('plus')} Add another</button></div>`;
+    icons(content);$('#modal-shade').classList.add('show');const first=content.querySelector('input:not([type=checkbox])');if(first)first.focus()}
+  function closeModal(){$('#modal-shade').classList.remove('show')}
+  function openDetail(id){const t=state.tasks.find(x=>x.id===id);if(!t)return;const r=repos.find(x=>x.id===t.repo);$('#detail-content').innerHTML=`<div class="dc-section-head"><div class="dc-eyebrow">WORK ITEM · ${esc(t.id)}</div><button class="dc-icon-button" data-action="close-detail" aria-label="Close details">${icon('x')}</button></div>${pill(t.status)}<h2>${esc(t.title)}</h2><p>${esc(t.summary)}</p><div class="dc-detail-section"><strong>Repository</strong><div>${esc(r.name)} · ${esc(r.slug)}</div></div><div class="dc-detail-section"><strong>Current assignment</strong><div>${esc(t.owner)}</div></div><div class="dc-detail-section"><strong>Scope</strong><div>${esc(t.scope)}</div></div><div class="dc-detail-section"><strong>Acceptance criteria</strong><div>${esc(t.criteria)}</div></div><div class="dc-callout" style="margin-top:14px">${icon('info')}Demo data only. No real source files, commits, or PRs are changed.</div><div class="dc-action-row"><button class="dc-btn primary" data-action="close-detail">Close details</button>${t.status==='approval'?`<button class="dc-btn" data-action="demo-approve" data-id="${esc(t.id)}">Simulate approval</button>`:''}</div>`;$('#detail-shade').classList.add('show');$('#task-detail').classList.add('show')}
+  function closeDetail(){$('#detail-shade').classList.remove('show');$('#task-detail').classList.remove('show')}
+  document.addEventListener('click',e=>{
+    const nav=e.target.closest('[data-nav]');if(nav){showView(nav.dataset.nav);return}
+    const action=e.target.closest('[data-action]');if(action){const a=action.dataset.action;if(['board','agents','activity'].includes(a))showView(a);if(a==='new-change'||a==='import')openModal(a);if(a==='close-modal')closeModal();if(a==='close-detail')closeDetail();if(a==='demo-approve'){const task=state.tasks.find(t=>t.id===action.dataset.id);if(task){task.status='done';task.owner='Owner approved (demo)';addEvent('Approval simulated',task.id+' · '+task.title);render();closeDetail();toast('Demo approval recorded locally')}}return}
+    const task=e.target.closest('[data-task]');if(task){openDetail(task.dataset.task);return}
+    const choice=e.target.closest('[data-repo]');if(choice){closeModal();setRepo(choice.dataset.repo);return}
+  });
+  document.addEventListener('change',e=>{if(e.target.id==='overview-codex'||e.target.id==='overview-claude'){state.agents[e.target.id==='overview-codex'?'codex':'claude']=e.target.checked;renderTeam();renderAgentCards();toast('Agent selection updated locally')}if(e.target.matches('[data-agent-toggle]')){state.agents[e.target.dataset.agentToggle]=e.target.checked;renderTeam();renderAgentCards();toast('Agent selection updated locally')}});
+  document.addEventListener('submit',e=>{
+    if(e.target.id==='new-change-form'){e.preventDefault();const title=$('#change-title').value.trim();const summary=$('#change-description').value.trim();if(!title||!summary)return;const id='CHG-'+(47+state.tasks.filter(t=>t.id.startsWith('CHG-0')&&Number(t.id.slice(4))>=47).length);const assignment=$('#change-agent').value;state.tasks.unshift({id,repo:state.repo,title,summary,status:'queued',owner:assignment,scope:'Defined by the approved plan',criteria:'Requires review and explicit acceptance before completion'});addEvent('New change registered (demo)',id+' · '+title);closeModal();render();showView('board');toast(id+' created in browser-only demo')}
+    if(e.target.id==='import-form'){e.preventDefault();const url=$('#import-url').value.trim();if(!/^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/.test(url)){toast('Enter a valid GitHub repository URL');return}closeModal();toast('Import preview only — no clone or API call')}
+  });
+  $('#modal-shade').addEventListener('click',e=>{if(e.target===$('#modal-shade'))closeModal()});$('#detail-shade').addEventListener('click',closeDetail);$('#modal-close').addEventListener('click',closeModal);$('#choose-repo').addEventListener('click',()=>openModal('choose'));$('#mobile-repos').addEventListener('click',()=>showView('repositories'));
+  $('#top-github').addEventListener('click',()=>window.open('https://github.com/Vgarcan/dev-coordinator-hub','_blank','noopener,noreferrer'));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeDetail()}});
+  icons();render();
+  // The original Glassmorphism Pro theme supplies optional pointer lighting.
+  // Its external module activates only when online and supported by browser.
+  window.addEventListener('load',()=>{if(window.ThemeRuntime)window.ThemeRuntime.activate('glassmorphism-pro')});
+})();
+</script>
+<!-- Actual optional runtime from the existing theme repository. -->
+<script src="https://vgarcan.github.io/botstrap-css-styles/js/theme-core.js" defer></script>
+</body>
+</html>
