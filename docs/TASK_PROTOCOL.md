@@ -26,6 +26,8 @@ The private control plane should eventually represent:
 | `intent`, `scope` | Requested outcome and explicit exclusions |
 | `acceptance` | Verifiable tests/evidence required |
 | `agent_policy` | Allowed CLI agents, role and review requirements |
+| `model_policy` | Approved provider/model ID or bounded eligible tier; desired/effective effort, allowed fallback and data restrictions |
+| `routing_rationale` | ChatGPT's explained recommendation, risk class and NO_AI/SINGLE/HANDOFF/PARALLEL/WAIT choice |
 | `limits` | Maximum duration, attempts, context/session budget, concurrency |
 | `requested_by`, `approved_by` | Auditable actor identities |
 | `spec_hash`, `approval_expires_at` | Approval pinned to a specific task version |
@@ -61,7 +63,7 @@ The transition map is indicative; cancellation, recovery and retry semantics mus
 
 - A text comment or label does not grant operating-system execution authority.
 - Authorisation must come from an explicitly approved identity through a separately validated protocol.
-- Approval binds repo, command scope, agent policy, limits, expiry and content hash.
+- Approval binds repo, command scope, agent/model/effort or allowed tier, fallback constraints, limits, expiry and content hash. Material model-tier upgrades require reapproval.
 - Any material mutation requires a new approval; repeated delivery with the same ID/revision is idempotent.
 - The worker must refuse unexpected repos, dangerous commands, untrusted attachments and missing permits.
 - Review and owner acceptance are distinct actions; no agent may grant itself additional permission.
@@ -70,16 +72,17 @@ The transition map is indicative; cancellation, recovery and retry semantics mus
 
 Agents exchange compact evidence, not multi-thousand-token transcripts:
 
-1. Implementation agent returns summary, changed files, SHA/PR and test results.
-2. Coordinator records that output and checks deterministic requirements first.
-3. Reviewer receives approved specification, relevant diff and tests, normally read-only.
-4. Reviewer reports `APPROVE`, `REQUEST_CHANGES` or `BLOCKED` with actionable findings.
-5. Coordinator can permit only a small preapproved number of correction loops before escalating.
+1. ChatGPT's proposed assignment is recorded with selected provider/model (if verified), desired effort, budget and whether independent review is warranted; owner approves permitted limits. See [collaboration policy](CHATGPT_AGENT_COLLABORATION.md) and [model selection](MODEL_SELECTION_POLICY.md).
+2. Implementation agent returns summary, changed files, SHA/PR, tested outcomes and usage data only when actually available.
+3. Coordinator records that output and checks deterministic requirements first.
+4. Reviewer receives approved specification, relevant diff and tests, normally read-only.
+5. Reviewer reports `APPROVE`, `REQUEST_CHANGES` or `BLOCKED` with actionable findings.
+6. Coordinator can permit only a small preapproved number of correction loops before escalating.
 
 No agent continuously polls another agent or expands the approved scope.
 
 ## Failure and evidence
 
-Persist timeouts, cancellations, authentication failures, token-limit errors and audit events without copying secrets. Recover after crashes without duplicate execution. Usage percentages must be labelled **unverified** when providers do not expose accurate subscription telemetry.
+Persist timeouts, cancellations, authentication failures, token-limit errors and audit events without copying secrets. Recover after crashes without duplicate execution. Usage percentages must be labelled **unverified** when providers do not expose accurate subscription telemetry. A failed CLI model lookup or unsupported effort setting must block or invoke only an explicitly approved equivalent fallback.
 
 Result is not `DONE` simply because a CLI produced text. It must meet acceptance, have validation evidence and obtain the required human decision.

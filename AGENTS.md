@@ -18,6 +18,7 @@ This is the **public development repository** for Dev Coordination Hub, not an o
 ## Change delivery
 - Prefer small, documented and testable changes; do not rewrite the UI or architecture without a reviewed need.
 - For CSS/UI, preserve the established Glassmorphism Pro theme integration and mobile-first behaviour.
+- Follow [ChatGPT/agent collaboration](docs/CHATGPT_AGENT_COLLABORATION.md) and [model selection policy](docs/MODEL_SELECTION_POLICY.md): no model is automatically authorised by these docs.
 - Link affected FR/NFR IDs, Issues and decisions; document tests, evidence and known gaps in PRs.
 - Owner approval is required for material UX, architecture, security and scope changes.
 

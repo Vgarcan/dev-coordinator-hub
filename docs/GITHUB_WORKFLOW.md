@@ -28,13 +28,14 @@ GitHub Projects and Discussions may improve navigation as the backlog grows; the
 ## From an idea to an accepted change
 
 1. **Discuss:** owner and ChatGPT define what problem is being solved.
-2. **Capture:** open a public-safe Issue using the right template, identifying objective, boundaries, requirement IDs and acceptance.
-3. **Plan:** propose approach, dependencies, role and risk. Record unresolved decisions instead of guessing.
-4. **Approve scope:** owner gives explicit approval for the work and any autonomy/spending limits.
-5. **Implement:** create a branch and draft PR, with bounded changes, tests and evidence.
-6. **Review:** use PR review comments or request changes; independent agent review is not equivalent to owner approval.
-7. **Accept:** owner approves meaningful scope/design changes; merge only after requested checks pass.
-8. **Record:** update docs/decision register, close or link Issues and preserve review history.
+2. **Recommend:** ChatGPT classifies risk and proposes NO_AI or agent/model/effort, SINGLE/HANDOFF/PARALLEL/WAIT, reviewer and bounded budget. See [collaboration](CHATGPT_AGENT_COLLABORATION.md).
+3. **Capture:** open a public-safe Issue using the right template, identifying objective, boundaries, requirement IDs and acceptance.
+4. **Plan:** propose approach, dependencies, role and risk. Record unresolved decisions instead of guessing.
+5. **Approve scope:** owner gives explicit approval for the work and any autonomy/spending limits.
+6. **Implement:** create a branch and draft PR, with bounded changes, tests and evidence.
+7. **Review:** use PR review comments or request changes; independent agent review is not equivalent to owner approval.
+8. **Accept:** owner approves meaningful scope/design changes; merge only after requested checks pass.
+9. **Record:** update docs/decision register, close or link Issues and preserve review history.
 
 A plan being in an Issue or PR **does not automatically authorise agent execution**. The future private coordination protocol requires separate validated authorisation.
 

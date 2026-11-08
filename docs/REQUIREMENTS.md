@@ -1,6 +1,6 @@
 # Requirements register
 
-**Status:** initial traceable baseline, pending PDD review. FR identifiers preserve the scope of PDD v0.1; implementation evidence is not yet available.
+**Status:** initial traceable baseline, pending PDD review. FR-01 to FR-11 preserve the original scope; FR-12/13 capture the subsequent model-selection and coordination requirements. Implementation evidence is not yet available.
 
 ## Table of contents
 
@@ -23,6 +23,8 @@
 | FR-09 | Should | Global pause/kill switch and limits for concurrency, retries, duration and available budget |
 | FR-10 | Should | Record comparable duration, interventions, review loops, failures and reliable usage information |
 | FR-11 | Later | Private authenticated Django audit viewer/foro, reading the same authoritative task state |
+| FR-12 | Must | ChatGPT proposes NO_AI or a verified-eligible agent/model/effort tier, reviewer and coordination mode with rationale and obtains approval before dispatch |
+| FR-13 | Must | Coordinator verifies model/effort support and enforces the approved fallback, tier, runtime and retry constraints; unknown quota telemetry must not be shown as measured |
 
 ## Nonfunctional requirements
 
@@ -37,6 +39,8 @@
 | NFR-QA-01 | Quality | Readable maintainable Python, automated tests, structured logs and code review |
 | NFR-UX-01 | Usability | Select repo → agree plan → authorise → inspect outcome, usable from mobile |
 | NFR-PERF-01 | Efficiency | Deterministic checks do not invoke AI; bounded context and review loops |
+| NFR-PERF-02 | Model economy | Use lowest suitable available capability, optional independent review, conservative time/attempt budgets and evidence-based escalation |
+| NFR-UX-02 | Explainability | Before approval, the user can see proposed agents/models, effort, mode, estimated limitations, allowed fallback and reasons |
 | NFR-PORT-01 | Portability | Headless Linux; no dependency on VS Code, web control panels or a specific distro |
 
 ## Traceability rules

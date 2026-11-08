@@ -23,6 +23,8 @@
 | D-010 | Private Django audit UI / foro after bridge feasibility | **Proposed** | Avoid building an unnecessary backend before value proof |
 | D-011 | Server, sandbox technology, backup and retention | **Pending** | Must be tested in feasibility |
 | D-012 | No automatic merges, deployment or destructive operation without owner approval | **Agreed** | Human authority over high-impact changes |
+| D-013 | ChatGPT recommends task-specific agent/model/effort and coordination mode, including NO_AI, before owner approval | **Agreed in concept** | Economise token use without sacrificing validation; see #8 |
+| D-014 | Dynamic eligible-model catalog, bounded fallback and routing telemetry in Linux | **Proposed** | Verify exact CLI support and subscriptions first; see #8 |
 
 ## How to change a decision
 

@@ -6,7 +6,8 @@ This repo is **public** and currently includes only a **static demo and draft pr
 1. `docs/README.md` (documentation map).
 2. `docs/PDD.md` and `docs/DECISIONS.md` (objectives and approval status).
 3. `docs/SECURITY.md` and `docs/GITHUB_WORKFLOW.md` (boundaries and collaboration).
-4. `AGENTS.md` (shared short engineering rules).
+4. `docs/CHATGPT_AGENT_COLLABORATION.md` and `docs/MODEL_SELECTION_POLICY.md` (recommendations, availability, budgets).
+5. `AGENTS.md` (shared short engineering rules).
 
 ## Operating rules
 - Do not assume open issues, UI buttons or model text authorise real agent execution.

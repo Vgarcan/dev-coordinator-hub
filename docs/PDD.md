@@ -57,7 +57,7 @@ The public visual prototype is an **already-created design exploration**, not ev
 | Actor | Responsibility and constraint |
 | --- | --- |
 | Owner | Selects repo and goals, approves scope and sensitive actions, accepts outcomes |
-| ChatGPT | Assists planning, assignment proposals, review and status queries; not a 24/7 process |
+| ChatGPT | Assists planning, recommends suitable agent/model/effort and coordination mode, review and status queries; not a 24/7 process |
 | Local coordinator | Validates identity, approval, task version, dependencies and runtime policy; dispatches and logs |
 | Codex CLI / Claude Code | Execute scoped work in isolated environments and return evidence, not final product authority |
 | GitHub | Versioned source, Issues, PRs and private task hand-offs where authorised |
@@ -77,18 +77,19 @@ The server uses outbound GitHub access first; it does not require inbound Intern
 
 1. **Define:** owner and ChatGPT agree objective, repo, acceptance, allowed agents and limits.
 2. **Register:** create versioned structured draft with a unique task ID.
-3. **Authorise:** authorised human approves the *specific immutable task version*; issue comments alone are not approval.
-4. **Prepare:** coordinator validates permissions, available tools and clean/isolated checkout.
-5. **Execute:** agent works within an explicit sandbox, timeout and attempt budget.
-6. **Review:** deterministic checks run; a second agent reviews when authorised and justified.
-7. **Publish:** concise status, tests, commit/PR and redacted evidence reach the private coordination channel.
-8. **Decide:** owner accepts, requests a scoped revision or cancels.
+3. **Recommend:** ChatGPT proposes whether an AI model is needed, available agent/model family and desired reasoning effort, execution mode, independent review and bounded budget. Its recommendation is subject to current CLI/account verification.
+4. **Authorise:** authorised human approves the *specific immutable task version*, including allowed model/effort tier and limits; issue comments alone are not approval.
+5. **Prepare:** coordinator validates permissions, available models and supported effort controls, budget and clean/isolated checkout.
+6. **Execute:** agent works within an explicit sandbox, timeout and attempt budget.
+7. **Review:** deterministic checks run first; a second agent reviews when authorised and justified.
+8. **Publish:** concise status, selected model/effort when known, tests, commit/PR and redacted evidence reach the private coordination channel.
+9. **Decide:** owner accepts, requests a scoped revision or cancels.
 
 Suggested states: `DRAFT → READY → PREPARING → RUNNING → REVIEW → WAITING_APPROVAL → DONE`. `BLOCKED`, `FAILED` and `CANCELLED` are explicit alternatives. All transitions are recorded and idempotent.
 
 ## 7. Requirements and quality
 
-The traceable [requirements register](REQUIREMENTS.md) defines FR-01 to FR-11 and NFR constraints. Every implementation Issue should reference one or more IDs; tests and PR evidence should be mapped back to them.
+The traceable [requirements register](REQUIREMENTS.md) defines FR-01 to FR-13 and NFR constraints. [ChatGPT–agent collaboration](CHATGPT_AGENT_COLLABORATION.md) and [model selection](MODEL_SELECTION_POLICY.md) describe the recommended assignment, model/effort, review and budget policy; exact provider capability and compliance are pending feasibility verification. Every implementation Issue should reference one or more IDs; tests and PR evidence should be mapped back to them.
 
 Important: GitHub’s own comments, repository files and model outputs are **untrusted input** until the coordinator validates them.
 
@@ -99,9 +100,10 @@ Important: GitHub’s own comments, repository files and model outputs are **unt
 - Keep secrets out of code, chat, prompts, issues, logs and static Pages.
 - Require explicit approval for destructive operations, production changes, merges, new access or expanded scope.
 - Prefer per-job workspace isolation, restricted I/O and deterministic checks.
+- ChatGPT recommends the smallest viable agent/model and reasoning effort, explicitly including **no AI** for deterministic operations. The owner approves the permitted model tier and budget, and the coordinator verifies CLI support and enforces these constraints without asking a model to self-authorise.
 - Confirm provider terms and the organisation's permission for Claude Code before using its enterprise-provided access in this environment.
 
-The desired **80% reserve / 20% manual allowance** is only approximate until reliable official quota telemetry is available; instead enforce conservative budgets for time, attempts, concurrency and sessions.
+The desired **80% usage ceiling / 20% manual reserve** is only approximate until reliable official quota telemetry is available; instead enforce conservative budgets for time, attempts, concurrency and sessions.
 
 ## 9. Delivery plan
 

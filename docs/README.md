@@ -14,6 +14,8 @@
 | [Architecture](ARCHITECTURE.md) | Logical boundaries, components, trust and deployment | Proposed design |
 | [Requirements](REQUIREMENTS.md) | Testable FR/NFR identifiers and traceability | Initial baseline |
 | [Task protocol](TASK_PROTOCOL.md) | Data, states, approval and review hand-offs | Proposed design |
+| [ChatGPT–agent collaboration](CHATGPT_AGENT_COLLABORATION.md) | Planning, delegation, approval and communication modes | Proposed design · #8 |
+| [Model selection policy](MODEL_SELECTION_POLICY.md) | Choose models/effort economically, monitor limits, justify escalation | Proposed design · #8 |
 | [Security](SECURITY.md) | Public/private data, access, execution policy | Mandatory constraints |
 | [Project plan](PROJECT_PLAN.md) | Delivery phases and exit criteria | Proposed plan |
 | [GitHub workflow](GITHUB_WORKFLOW.md) | How to communicate, review and preserve evidence | Working agreement |
