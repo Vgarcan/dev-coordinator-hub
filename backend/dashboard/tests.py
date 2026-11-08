@@ -12,3 +12,10 @@ class DashboardHomeTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Django foundation ready')
         self.assertContains(response, 'Not connected to agents')
+        self.assertTemplateUsed(response, 'dashboard/home.html')
+
+    def test_admin_requires_authentication(self):
+        """The standard Django admin must not expose its index anonymously."""
+        response = self.client.get('/admin/')
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/admin/login/', response['Location'])

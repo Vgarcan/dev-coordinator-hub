@@ -99,9 +99,11 @@ A sample `.env.example` describes the variables, but **Django does not read it a
 | `/` | `dashboard.urls` → `dashboard.views.home` | Template-only landing page |
 | `/admin/` | `django.contrib.admin` | Standard Django admin with default authentication |
 
-One small `SimpleTestCase` asserts the landing page responds and truthfully describes its non-operational state. It requires no custom database tables.
+Two small `SimpleTestCase` checks verify the home template/content and that Django's built-in admin redirects unauthenticated visitors to its login. They require no custom database tables.
 
-Run `python manage.py test` to execute it. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
+Run `python manage.py test` to execute them. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
+
+The dependency range permits later security patch releases within Django 5.2 LTS, and its minimum is set to **5.2.19** (security release of 3 November 2026). The boilerplate header in `settings.py` intentionally records the **5.2.8** template version used to generate the original scaffold; a maintenance upgrade does not replace its vanilla comments.
 
 ## Vanilla conventions and deviations
 
