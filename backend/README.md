@@ -117,6 +117,19 @@ The original `SimpleTestCase` checks verify the home template/content and admin 
 
 Run `python manage.py makemigrations --check --dry-run` to verify migration consistency, followed by `python manage.py test`.
 
+### Read-only preflight (no Django or AI tokens)
+
+The standard-library environment diagnostic only checks for Python 3.13, a Django import and `git`/`codex`/`claude` commands on PATH. It **does not run any CLI**, contact GitHub, validate credentials or inspect subscription quotas:
+
+```bash
+python scripts/preflight.py
+python scripts/preflight.py --json
+python -m unittest discover -v -s scripts -p 'test_preflight.py'
+```
+
+The JSON form is useful for future local tooling. Seeing a CLI on PATH is **not** permission to use it, proof of authentication, or approval of agent execution.
+
+
 **Repeatable validation without GitHub Actions:** run `python scripts/verify.py` for standard-library syntax/structure checks. After installing Django, run `python scripts/verify.py --full` to perform Django `check`, migration drift detection, local `migrate`, and the test suite. See [the validation log](VALIDATION.md) for the exact evidence and current blockers. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
 
 The dependency range permits later security patch releases within Django 5.2 LTS, and its minimum is set to **5.2.19** (security release of 3 November 2026). The boilerplate header in `settings.py` intentionally records the **5.2.8** template version used to generate the original scaffold; a maintenance upgrade does not replace its vanilla comments.

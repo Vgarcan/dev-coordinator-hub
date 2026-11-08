@@ -27,6 +27,7 @@ The existing static UI is a **demo**, not the read-only proof or a connected web
 1. Review and approve the foundation docs and terminology on a PR.
 2. Create Issues for the **Phase 0** feasibility checks and their observable outputs.
 3. Choose a Linux test host; establish non-root identities and an isolated test repository.
+   - Run `python backend/scripts/preflight.py` on that host to inventory Python, Django and CLI availability **without executing an agent**; record authentication and subscription eligibility as unverified.
 4. Verify official CLI use in headless mode, supported selectable model IDs / effort controls and quota visibility; explicitly check company-approved Claude use.
 5. Decide and create the private control channel with scoped GitHub access.
 6. Run one safe **read-only** task, then review findings before allowing edits.
