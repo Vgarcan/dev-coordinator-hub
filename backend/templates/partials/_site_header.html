@@ -8,15 +8,19 @@
             </span>
         </a>
 
-        <!-- Native details/summary keeps mobile navigation usable without JavaScript. -->
-        <details class="dc-menu">
-            <summary class="dc-menu-toggle">Menu <span aria-hidden="true">☰</span></summary>
-            <nav class="dc-nav" aria-label="Primary navigation">
-                <a class="dc-nav-link" href="{% url 'dashboard:home' %}"
-                   {% if request.resolver_match.namespace == 'dashboard' %}aria-current="page"{% endif %}>Overview</a>
-                <a class="dc-nav-link" href="{% url 'repositories:list' %}"
-                   {% if request.resolver_match.namespace == 'repositories' %}aria-current="page"{% endif %}>Repositories</a>
-                <a class="dc-nav-link" href="{% url 'admin:index' %}">Django Admin</a>
+        <!-- Desktop navigation remains visible regardless of mobile disclosure state. -->
+        <nav class="dc-desktop-nav" aria-label="Primary navigation">
+            {% include 'partials/_nav_links.html' %}
+        </nav>
+
+        <!-- Native mobile menu is keyboard-operable without any JavaScript. -->
+        <details class="dc-mobile-menu">
+            <summary class="dc-menu-toggle">
+                <span>Menu</span>
+                <span class="dc-menu-icon" aria-hidden="true"><span></span><span></span></span>
+            </summary>
+            <nav class="dc-mobile-nav" aria-label="Mobile navigation">
+                {% include 'partials/_nav_links.html' %}
             </nav>
         </details>
     </div>

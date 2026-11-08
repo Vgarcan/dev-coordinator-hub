@@ -1,0 +1,6 @@
+<!-- A single source for both the mobile and desktop navigation destinations. -->
+<a class="dc-nav-link" href="{% url 'dashboard:home' %}"
+   {% if request.resolver_match.namespace == 'dashboard' %}aria-current="page"{% endif %}>Overview</a>
+<a class="dc-nav-link" href="{% url 'repositories:list' %}"
+   {% if request.resolver_match.namespace == 'repositories' %}aria-current="page"{% endif %}>Repositories</a>
+<a class="dc-nav-link dc-nav-admin" href="{% url 'admin:index' %}">Django Admin <span aria-hidden="true">↗</span></a>
