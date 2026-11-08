@@ -416,7 +416,7 @@ body.dc-shell::before {
     pointer-events: none;
     background: linear-gradient(90deg, transparent, rgba(252, 253, 255, .54), transparent);
 }
-.dc-panel.card > * { position: relative; z-index: 1; }
+.dc-panel.card > :not(.dc-panel-orbit) { position: relative; z-index: 1; }
 .dc-section { margin-top: clamp(3.5rem, 8vw, 6rem); }
 .dc-section-heading {
     display: flex;
