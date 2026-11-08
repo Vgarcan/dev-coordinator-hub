@@ -16,15 +16,51 @@
     <p class="dc-inline-note">Inventory only — tracking a repository does not approve automation or execution.</p>
 </section>
 
+<section class="dc-repository-tools" aria-label="Repository search and filters">
+    <!-- Plain GET form: accessible and functional without JavaScript. -->
+    <form class="dc-filter-form" method="get" action="{% url 'repositories:list' %}" role="search">
+        <div class="dc-filter-field">
+            <label for="repository-query">Repository name</label>
+            <input id="repository-query" type="search" name="q" maxlength="100"
+                   value="{{ search }}" placeholder="Search owner/repository">
+        </div>
+        <div class="dc-filter-field">
+            <label for="repository-status">Tracking status</label>
+            <select id="repository-status" name="status">
+                <option value="">All statuses</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}"{% if selected_status == value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="dc-filter-actions">
+            <button class="dc-button dc-button-primary" type="submit">Apply filters</button>
+            {% if is_filtered %}
+                <a class="dc-button dc-button-secondary" href="{% url 'repositories:list' %}">Clear</a>
+            {% endif %}
+        </div>
+    </form>
+    <p class="dc-filter-count" role="status">
+        Showing {{ repositories|length }}
+        {% if repositories|length == 1 %}repository{% else %}repositories{% endif %}.
+    </p>
+</section>
+
 <section class="dc-section dc-list-section" aria-label="Registered repositories">
     {% for repository in repositories %}
         {% include 'repositories/_repository_card.html' with repository=repository %}
     {% empty %}
         <div class="dc-empty-state">
             <span class="dc-empty-symbol" aria-hidden="true">◇</span>
-            <h2>No repositories registered yet.</h2>
-            <p>Add a GitHub <code>owner/repository</code> identifier in Django Admin to start an inventory.</p>
-            <a class="dc-button dc-button-primary" href="{% url 'admin:repositories_repository_add' %}">Add a repository</a>
+            {% if is_filtered %}
+                <h2>No matching repositories.</h2>
+                <p>Try another repository name or tracking status.</p>
+                <a class="dc-button dc-button-secondary" href="{% url 'repositories:list' %}">Clear filters</a>
+            {% else %}
+                <h2>No repositories registered yet.</h2>
+                <p>Add a GitHub <code>owner/repository</code> identifier in Django Admin to start an inventory.</p>
+                <a class="dc-button dc-button-primary" href="{% url 'admin:repositories_repository_add' %}">Add a repository</a>
+            {% endif %}
         </div>
     {% endfor %}
 </section>

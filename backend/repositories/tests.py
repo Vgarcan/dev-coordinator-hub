@@ -75,3 +75,54 @@ class RepositoryListTests(TestCase):
         self.assertContains(response, 'https://github.com/example/sample')
         self.assertContains(response, 'Tracked')
         self.assertContains(response, 'Inventory only')
+
+    def test_staff_can_search_and_filter_by_tracking_status(self):
+        """The read-only GET form supports name and status together."""
+        Repository.objects.create(
+            full_name='example/alpha', tracking_status=Repository.TrackingStatus.TRACKED,
+        )
+        Repository.objects.create(
+            full_name='example/beta', tracking_status=Repository.TrackingStatus.CANDIDATE,
+        )
+        Repository.objects.create(
+            full_name='other/alpha', tracking_status=Repository.TrackingStatus.TRACKED,
+        )
+        self.client.force_login(self.staff)
+
+        response = self.client.get(self.url, {
+            'q': ' Example/ ', 'status': 'tracked',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'example/alpha')
+        self.assertNotContains(response, 'example/beta')
+        self.assertNotContains(response, 'other/alpha')
+        self.assertContains(response, 'Showing 1')
+        self.assertContains(response, 'Clear')
+
+    def test_invalid_tracking_status_is_ignored(self):
+        """Unknown values must not cause errors or create new status classes."""
+        Repository.objects.create(full_name='example/alpha')
+        self.client.force_login(self.staff)
+
+        response = self.client.get(self.url, {'status': 'unknown'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'example/alpha')
+        self.assertEqual(response.context['selected_status'], '')
+        self.assertFalse(response.context['is_filtered'])
+
+    def test_no_results_uses_a_distinct_filtered_empty_state(self):
+        Repository.objects.create(full_name='example/alpha')
+        self.client.force_login(self.staff)
+
+        response = self.client.get(self.url, {'q': 'missing'})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'No matching repositories.')
+        self.assertNotContains(response, 'No repositories registered yet.')
+        self.assertContains(response, 'Clear filters')
+
+    def test_filters_do_not_bypass_staff_authorisation(self):
+        """Filtering cannot make the view accessible to an ordinary member."""
+        self.client.force_login(self.member)
+        response = self.client.get(self.url, {'q': 'example', 'status': 'tracked'})
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/admin/login/', response['Location'])

@@ -10,6 +10,7 @@
 4. [Mobile-first and accessibility](#mobile-first-and-accessibility)
 5. [How to add a page](#how-to-add-a-page)
 6. [Validation and boundaries](#validation-and-boundaries)
+7. [Repository inventory filters](#repository-inventory-filters)
 
 ## Objective
 
@@ -65,3 +66,19 @@ Do not paste new `<!doctype html>` boilerplate or repeat Bootstrap/theme links i
 Source-file checks confirm both pages extend `base.html`, shared navigation and card partials are referenced, CSS load order is stable and existing route/test assertions are kept. Issue #13 documents the additional navigation fix and reusable components. **Django `manage.py test` and actual responsive-browser checks are still pending** because Django has not been installed in the execution environment.
 
 This frontend does not execute agents, use GitHub credentials, approve tasks, expose live audits, or alter the static GitHub Pages site.
+
+## Repository inventory filters
+
+The staff-only `/repositories/` page now provides two server-side GET filters:
+case-insensitive repository name search (`q`) and an allowlisted tracking status
+(`status`). They can be combined. Unknown statuses are ignored and search input
+is trimmed and capped at 100 characters. The template renders a separate filtered
+empty state and an explicit clear action. All controls work without JavaScript.
+
+This is **local browsing only**: the `@staff_member_required` guard remains on
+the view; filters do not fetch or clone from GitHub, grant execution permission,
+or disclose data to anonymous users.
+
+Source inspection confirms the intended view/template/test references. Actual
+Django tests and browser visual checks are still pending until an environment
+with Django installed is available.

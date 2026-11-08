@@ -470,3 +470,42 @@ body.dc-shell::before {
     .dc-brand-mark { width: 2.7rem; height: 2.7rem; }
     .dc-button { width: 100%; }
 }
+
+/* Staff repository inventory — mobile-first, native GET filters. */
+.dc-repository-tools {
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--dc-line);
+    border-bottom: 1px solid var(--dc-line);
+}
+.dc-filter-form { display: grid; gap: 1rem; }
+.dc-filter-field { display: grid; gap: .5rem; min-width: 0; }
+.dc-filter-field label { color: var(--dc-soft); font-size: .85rem; font-weight: 650; }
+.dc-filter-field input, .dc-filter-field select {
+    width: 100%;
+    min-height: 3rem;
+    padding: .75rem .9rem;
+    border: 1px solid var(--dc-line);
+    border-radius: var(--glass-organic-radius-control, 15px);
+    background: rgba(13, 29, 53, .8);
+    color: var(--dc-ink);
+    font: inherit;
+    color-scheme: dark;
+}
+.dc-filter-field input::placeholder { color: var(--dc-muted); opacity: .85; }
+.dc-filter-field input:focus-visible, .dc-filter-field select:focus-visible {
+    outline: 2px solid var(--dc-teal);
+    outline-offset: 3px;
+}
+.dc-filter-actions { display: flex; flex-wrap: wrap; align-items: end; gap: .65rem; }
+.dc-filter-count { margin: 1rem 0 0; color: var(--dc-muted); font-size: .85rem; }
+.dc-repository-tools + .dc-list-section { margin-top: 1.5rem; }
+@media (min-width: 768px) {
+    .dc-filter-form {
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, .9fr) auto;
+        align-items: end;
+    }
+}
+@media (max-width: 360px) {
+    .dc-filter-actions .dc-button { width: 100%; }
+}
