@@ -9,4 +9,6 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', views.home, name='home'),
+    # Public-safe presentation only; never dispatches or approves work.
+    path('tasks/', views.task_list, name='tasks'),
 ]

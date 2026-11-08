@@ -1,0 +1,15 @@
+{# Read-only component. Records are fabricated UI examples. #}
+<article class="card dc-panel dc-task-card" aria-labelledby="task-{{ task.id }}">
+    <div class="dc-task-card-top">
+        <span class="dc-task-id">{{ task.id }}</span>
+        <span class="dc-task-state dc-task-state-{{ task.status }}">{{ task.get_status_display|default:task.status|title }}</span>
+    </div>
+    <h2 id="task-{{ task.id }}" class="dc-task-title">{{ task.title }}</h2>
+    <p class="dc-task-description">{{ task.description }}</p>
+    <dl class="dc-task-details">
+        <div><dt>Example repository</dt><dd>{{ task.repository }}</dd></div>
+        <div><dt>Agent</dt><dd>{{ task.agent }}</dd></div>
+        <div><dt>Illustrative next step</dt><dd>{{ task.next_step }}</dd></div>
+    </dl>
+    <p class="dc-task-foot">Fictional example · No execution available</p>
+</article>

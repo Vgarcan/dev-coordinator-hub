@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tasks demo — Dev Coordination Hub{% endblock %}
+{% block meta_description %}Read-only task lifecycle concept with fictional data{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'dashboard/css/tasks.css' %}">{% endblock %}
+
+{% block content %}
+<section class="dc-page-intro" aria-labelledby="tasks-title">
+    <p class="dc-eyebrow"><span class="dc-eyebrow-line" aria-hidden="true"></span> Workspace / Tasks</p>
+    <h1 id="tasks-title" class="dc-display dc-display-compact">Task <em>workspace</em></h1>
+    <p class="dc-lead">See how scoped work might look before connecting a private coordinator.</p>
+
+    <div class="dc-task-notice" role="note">
+        <strong>Simulation only</strong>
+        <span>All {{ total_tasks }} records are fictional. No agents are connected. You cannot approve, dispatch or change tasks here.</span>
+    </div>
+</section>
+
+<section class="dc-task-tools" aria-label="Filter fictional tasks">
+    <form class="dc-task-filter" method="get" action="{% url 'dashboard:tasks' %}">
+        <div class="dc-filter-field">
+            <label for="task-status">Lifecycle status</label>
+            <select id="task-status" name="status">
+                <option value="">All example tasks</option>
+                {% for value, label in status_choices %}
+                    <option value="{{ value }}"{% if selected_status == value %} selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button class="dc-button dc-button-primary" type="submit">Apply filter</button>
+        {% if is_filtered %}
+            <a class="dc-button dc-button-secondary" href="{% url 'dashboard:tasks' %}">Clear</a>
+        {% endif %}
+    </form>
+    <p class="dc-filter-count" role="status">Showing {{ tasks|length }} of {{ total_tasks }} fictional tasks.</p>
+</section>
+
+<section class="dc-task-grid" aria-label="Fictional task examples">
+    {% for task in tasks %}
+        {% include 'dashboard/_task_card.html' with task=task %}
+    {% empty %}
+        <div class="dc-empty-state dc-task-empty">
+            <span class="dc-empty-symbol" aria-hidden="true">◇</span>
+            <h2>No example tasks in this state</h2>
+            <p>This is a display filter; no task has been created or changed.</p>
+            <a class="dc-button dc-button-secondary" href="{% url 'dashboard:tasks' %}">Show all examples</a>
+        </div>
+    {% endfor %}
+</section>
+
+<section class="dc-section" aria-labelledby="lifecycle-title">
+    <div class="dc-section-heading">
+        <div>
+            <p class="dc-eyebrow">Future workflow / Concept</p>
+            <h2 id="lifecycle-title">From objective to evidence</h2>
+        </div>
+    </div>
+    <ol class="dc-task-steps">
+        <li><strong>Define</strong><span>Specify goal, repository, acceptance and limits.</span></li>
+        <li><strong>Authorise</strong><span>Approve an exact task version via verified identity.</span></li>
+        <li><strong>Execute &amp; review</strong><span>A future private worker would return auditable evidence.</span></li>
+        <li><strong>Accept</strong><span>The owner, not an agent, makes the final decision.</span></li>
+    </ol>
+</section>
+{% endblock %}
