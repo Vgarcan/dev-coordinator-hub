@@ -65,3 +65,31 @@ class DashboardTaskDemoTests(SimpleTestCase):
         self.assertNotContains(response, 'method="post"')
         self.assertNotContains(response, 'Run agent')
         self.assertNotContains(response, 'Approve task')
+
+class DotenvConfigurationTests(SimpleTestCase):
+    """Local .env is optional and never overwrites process configuration."""
+
+    def test_existing_os_environment_value_takes_precedence(self):
+        import os
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+
+        from dotenv import load_dotenv
+
+        with tempfile.TemporaryDirectory() as directory:
+            sample = Path(directory) / '.env'
+            sample.write_text('DCH_TEST_SETTING=from_file\n', encoding='utf-8')
+            with patch.dict(os.environ, {'DCH_TEST_SETTING': 'from_process'}):
+                load_dotenv(dotenv_path=sample, override=False)
+                self.assertEqual(os.environ['DCH_TEST_SETTING'], 'from_process')
+
+    def test_missing_dotenv_is_optional(self):
+        import tempfile
+        from pathlib import Path
+
+        from dotenv import load_dotenv
+
+        with tempfile.TemporaryDirectory() as directory:
+            missing = Path(directory) / 'missing.env'
+            self.assertFalse(load_dotenv(dotenv_path=missing, override=False))
