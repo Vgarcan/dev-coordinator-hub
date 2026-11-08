@@ -32,6 +32,7 @@ The page is a **simulated, mobile-first mock-up** with fictional repositories, a
 - [Task protocol](docs/TASK_PROTOCOL.md) — proposed private task and review lifecycle.
 - [Decision register](docs/DECISIONS.md) and [risk register](docs/RISKS.md).
 - [Security](docs/SECURITY.md).
+- [Codex project instructions](AGENTS.md) and [Claude Code project instructions](CLAUDE.md) — small agent briefs; they do **not** replace enforced runtime security.
 
 ## How we collaborate on GitHub
 
