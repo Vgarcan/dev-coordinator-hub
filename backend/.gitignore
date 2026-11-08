@@ -1,0 +1,13 @@
+# Django's local development database is not a shared source artifact.
+db.sqlite3
+db.sqlite3-journal
+
+# Do not commit local credentials, Python virtualenvs, caches, or generated logs.
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.log
