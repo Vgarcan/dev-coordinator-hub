@@ -20,11 +20,14 @@ Make the local Django frontend navigable and maintainable while preserving a fam
 | Location | Responsibility |
 | --- | --- |
 | `backend/templates/base.html` | Shared document, CSS includes, content blocks, landmarks |
-| `backend/templates/partials/_site_header.html` | Site branding and native mobile navigation |
+| `backend/templates/partials/_site_header.html` | Site branding with independently visible desktop and mobile navigation |
+| `backend/templates/partials/_nav_links.html` | One source for nav destinations/active-page state |
+| `backend/templates/partials/_feature_tile.html` | Reusable editorial feature tile on overview |
 | `backend/templates/partials/_status_strip.html` | Static non-operational status disclaimer |
 | `backend/templates/partials/_site_footer.html` | Small common footer |
 | `backend/dashboard/templates/dashboard/home.html` | Django home/overview |
-| `backend/repositories/templates/repositories/list.html` | Staff-protected repository cards and empty state |
+| `backend/repositories/templates/repositories/list.html` | Staff-only inventory page and empty state |
+| `backend/repositories/templates/repositories/_repository_card.html` | Reusable, presentation-only repository card |
 | `backend/dashboard/static/dashboard/css/app.css` | App-only presentation and responsive adjustments |
 
 The project-level `TEMPLATES[0]['DIRS']` adds `BASE_DIR / 'templates'`; default `APP_DIRS=True` remains. No custom template loader, frontend framework or bundler is added.
@@ -43,9 +46,11 @@ The upstream CSS and Bootstrap are loaded from public CDNs. Development with no 
 
 ## Mobile-first and accessibility
 
-- Native `<details>`/`<summary>` supplies a collapsible navigation on narrow viewports without a JavaScript dependency.
+- Desktop links live in a separate, ordinary `<nav>` and are never descendants of a closed `<details>` (which would hide them). The mobile `<details>`/`<summary>` remains keyboard-operable without JavaScript; both containers include the same `_nav_links.html`.
 - A skip-to-main link, semantic header/nav/main/footer, keyboard focus styles and `aria-current` identify navigation and location.
-- Grid layout begins as one column, expanding at 768 px.
+- Grid layout begins as one column, expanding at 768 px; tiny phone widths use wrapped or full-width controls.
+- Editorial serif display headings contrast with the unchanged upstream sans-serif body. Added geometric light and layered material details are static (no looping decorative animation).
+- Feature tiles and repository cards use template includes only for genuinely repeated markup, not a new component framework.
 - Respect `prefers-reduced-motion: reduce`; ornamental pointer tracking is not necessary for usability.
 - Repository browsing is still protected by the server-side `staff_member_required` decorator. Hiding links is **not** an authorization mechanism.
 
@@ -57,6 +62,6 @@ Do not paste new `<!doctype html>` boilerplate or repeat Bootstrap/theme links i
 
 ## Validation and boundaries
 
-Source-file checks confirm both pages extend `base.html`, partials exist, CSS load order is stable and existing route/test assertions are kept. **Django `manage.py test` and actual responsive-browser checks are still pending** because Django has not been installed in the execution environment.
+Source-file checks confirm both pages extend `base.html`, shared navigation and card partials are referenced, CSS load order is stable and existing route/test assertions are kept. Issue #13 documents the additional navigation fix and reusable components. **Django `manage.py test` and actual responsive-browser checks are still pending** because Django has not been installed in the execution environment.
 
 This frontend does not execute agents, use GitHub credentials, approve tasks, expose live audits, or alter the static GitHub Pages site.

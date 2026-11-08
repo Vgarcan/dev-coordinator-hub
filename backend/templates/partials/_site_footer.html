@@ -1,7 +1,13 @@
 <footer class="dc-footer">
     <div class="container dc-footer-content">
-        <p class="mb-0">Dev Coordination Hub <span aria-hidden="true">·</span> Local Django prototype</p>
-        <a href="https://github.com/Vgarcan/dev-coordinator-hub"
-           target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+        <div class="dc-footer-brand">
+            <span class="dc-footer-monogram" aria-hidden="true">D/H</span>
+            <span>Dev Coordination Hub <span aria-hidden="true">·</span> Local Django prototype</span>
+        </div>
+        <div class="dc-footer-links">
+            <a href="{% url 'dashboard:home' %}">Overview</a>
+            <a href="https://github.com/Vgarcan/dev-coordinator-hub"
+               target="_blank" rel="noopener noreferrer">Source on GitHub</a>
+        </div>
     </div>
 </footer>

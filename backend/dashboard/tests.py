@@ -14,6 +14,7 @@ class DashboardHomeTests(SimpleTestCase):
         self.assertContains(response, 'Not connected to agents')
         self.assertTemplateUsed(response, 'dashboard/home.html')
         self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'partials/_feature_tile.html')
         self.assertTemplateUsed(response, 'partials/_site_header.html')
         self.assertTemplateUsed(response, 'partials/_nav_links.html')
         self.assertContains(response, 'class="dc-desktop-nav"')

@@ -297,3 +297,176 @@ body.dc-shell {
     .dc-button { transition: none; }
     .dc-button:hover { transform: none; }
 }
+
+/* ---------------------------------------------------------------
+   Editorial / organic glass refinement.
+   All additional selectors are project namespaced; preserve the
+   upstream semantic --theme-* values and Bootstrap's grid system.
+   --------------------------------------------------------------- */
+:root {
+    --dc-muted: #b7c9de;
+    --dc-soft: #e1edf9;
+    --dc-line: rgba(208, 231, 255, .22);
+    --dc-editorial: Georgia, "Times New Roman", serif;
+    --dc-elevation: 0 14px 38px rgba(2, 8, 24, .21),
+                    0 28px 80px rgba(2, 8, 24, .14);
+}
+body.dc-shell { isolation: isolate; background-color: var(--dc-bg); }
+body.dc-shell::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 30% 32% at 92% 20%, rgba(231, 164, 181, .14), transparent 84%),
+        radial-gradient(ellipse 35% 40% at 3% 80%, rgba(118, 208, 184, .13), transparent 83%);
+}
+.dc-site-header { position: relative; z-index: 20; }
+.dc-header-layout { padding-block: 1.1rem; gap: .8rem 1.25rem; }
+.dc-brand-mark {
+    position: relative;
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 1.15rem .85rem 1.25rem .9rem;
+    background: linear-gradient(145deg, rgba(198, 228, 250, .23), rgba(111, 86, 170, .1));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .31),
+                0 8px 26px rgba(3, 9, 27, .22);
+}
+.dc-brand-mark::after {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255, 255, 255, .13);
+    border-radius: inherit;
+    pointer-events: none;
+}
+.dc-brand-name strong { font-size: .96rem; letter-spacing: -.025em; }
+.dc-brand-name small { font-size: .69rem; letter-spacing: .08em; text-transform: uppercase; }
+
+.dc-status-strip { background: rgba(6, 16, 32, .26); }
+.dc-status-content { padding-block: .65rem; gap: .35rem 1rem; }
+.dc-status-label {
+    padding: .3rem .65rem;
+    background: rgba(118, 208, 184, .09);
+    border: 1px solid rgba(118, 208, 184, .26);
+    border-radius: 99rem;
+    font-size: .69rem;
+    letter-spacing: .035em;
+    font-weight: 700;
+}
+.dc-status-detail { margin-left: auto; }
+
+.dc-main { padding-top: clamp(2.8rem, 6.5vw, 5.6rem); }
+.dc-hero { position: relative; }
+.dc-hero-sup {
+    display: inline-block;
+    margin-bottom: 2.5rem;
+    color: var(--dc-muted);
+    font-size: .73rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+.dc-display, .dc-panel-heading, .dc-section-heading h2, .dc-empty-state h2 {
+    font-family: var(--dc-editorial);
+    font-weight: 400;
+}
+.dc-display { max-width: 11ch; letter-spacing: -.065em; font-size: clamp(3.25rem, 10vw, 6.1rem); }
+.dc-display em { color: #b8efe0; }
+.dc-display-compact { max-width: none; font-size: clamp(2.7rem, 7vw, 4.7rem); }
+.dc-lead { max-width: 36rem; color: var(--dc-soft); }
+.dc-hero-panel { position: relative; overflow: hidden; }
+.dc-hero-panel::before {
+    content: "";
+    position: absolute;
+    width: 15rem;
+    aspect-ratio: 1;
+    right: -7rem;
+    top: -7rem;
+    pointer-events: none;
+    border-radius: 38% 62% 62% 38% / 55% 43% 57% 45%;
+    background: radial-gradient(circle at 38% 35%, rgba(225, 168, 207, .26), transparent 68%);
+}
+.dc-panel-orbit {
+    position: absolute;
+    inset: auto -2.8rem -4rem auto;
+    width: 9rem;
+    aspect-ratio: 1;
+    border: 1px solid rgba(220, 234, 249, .13);
+    border-radius: 47% 53% 44% 56% / 63% 41% 59% 37%;
+    transform: rotate(-25deg);
+    pointer-events: none;
+}
+.dc-panel.card {
+    background:
+        linear-gradient(153deg, rgba(239, 249, 255, .105), transparent 29%),
+        var(--dc-panel);
+    border-color: rgba(223, 241, 255, .27);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .17), var(--dc-elevation);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+.dc-panel.card::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    top: 0;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(252, 253, 255, .54), transparent);
+}
+.dc-panel.card > * { position: relative; z-index: 1; }
+.dc-section { margin-top: clamp(3.5rem, 8vw, 6rem); }
+.dc-section-heading {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    justify-content: space-between;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--dc-line);
+}
+.dc-section-heading .dc-eyebrow { margin-bottom: .5rem; }
+.dc-feature {
+    padding-top: 1.5rem;
+    border-top: 2px solid transparent;
+    border-image: linear-gradient(90deg, var(--dc-teal), rgba(220, 235, 255, .18), transparent) 1;
+}
+.dc-feature-number {
+    font-family: var(--dc-editorial);
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #b8efe0;
+}
+.dc-feature h3 { font-size: 1.18rem; letter-spacing: -.025em; }
+.dc-feature p { max-width: 35ch; }
+.dc-button-primary {
+    background: linear-gradient(135deg, rgba(118, 208, 184, .26), rgba(118, 208, 184, .1));
+    box-shadow: inset 0 1px 0 rgba(236, 255, 250, .2), 0 8px 22px rgba(6, 32, 37, .14);
+}
+.dc-button-secondary { background: rgba(217, 234, 255, .045); }
+.dc-repository-card { position: relative; overflow: hidden; }
+.dc-repository-card:hover { border-color: rgba(118, 208, 184, .45); }
+.dc-repository-status { background: rgba(208, 231, 255, .06); }
+.dc-repository-status-tracked { border-color: rgba(118, 208, 184, .35); }
+.dc-repository-status-candidate { border-color: rgba(231, 164, 181, .3); }
+.dc-empty-state { background: linear-gradient(150deg, rgba(227, 242, 255, .065), rgba(13, 29, 53, .17)); }
+.dc-footer { background: rgba(4, 12, 26, .2); }
+.dc-footer-brand, .dc-footer-links { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+.dc-footer-monogram { font-weight: 800; color: var(--dc-teal); letter-spacing: -.05em; }
+.dc-footer-links { gap: 1.5rem; }
+
+@media (max-width: 767.98px) {
+    .dc-status-detail { margin-left: 0; }
+    .dc-hero-sup { margin-bottom: 1.8rem; }
+    .dc-hero { gap: 2.2rem; }
+    .dc-display { font-size: clamp(3rem, 13.5vw, 4.5rem); }
+    .dc-panel.card { padding: 1.5rem; }
+    .dc-footer-content { align-items: start; }
+}
+@media (max-width: 360px) {
+    .dc-brand-name strong { font-size: .86rem; }
+    .dc-brand-name small { font-size: .61rem; }
+    .dc-brand-mark { width: 2.7rem; height: 2.7rem; }
+    .dc-button { width: 100%; }
+}

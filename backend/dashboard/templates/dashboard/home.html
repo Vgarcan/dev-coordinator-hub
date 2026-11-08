@@ -6,6 +6,7 @@
 {% block content %}
 <section class="dc-hero" aria-labelledby="home-title">
     <div class="dc-hero-copy">
+        <span class="dc-hero-sup">01 / Your development space</span>
         <p class="dc-eyebrow"><span class="dc-eyebrow-line" aria-hidden="true"></span> The workspace</p>
         <h1 id="home-title" class="dc-display" aria-label="Django foundation ready">Django foundation <em>ready</em></h1>
         <p class="dc-lead">A calm place to organise development work. Built progressively with Django, starting with repository visibility.</p>
@@ -24,6 +25,7 @@
         </div>
         <h2 id="foundation-heading" class="dc-panel-heading">Start small. Keep it clear.</h2>
         <p class="dc-panel-text">The interface is taking shape, but we are not running any agent or exposing real task approvals.</p>
+        <span class="dc-panel-orbit" aria-hidden="true"></span>
         <dl class="dc-facts">
             <div><dt>Framework</dt><dd>Django 5.2 LTS</dd></div>
             <div><dt>First module</dt><dd>Repository inventory</dd></div>
@@ -38,21 +40,9 @@
         <h2 id="next-title">What exists today</h2>
     </div>
     <div class="dc-feature-grid">
-        <article class="dc-feature">
-            <span class="dc-feature-number">01</span>
-            <h3>Repository inventory</h3>
-            <p>Store and inspect a small list of GitHub repositories in Django Admin. Access to the listing is staff-only.</p>
-        </article>
-        <article class="dc-feature">
-            <span class="dc-feature-number">02</span>
-            <h3>Shared interface</h3>
-            <p>One base template, reusable navigation, and Glassmorphism Pro styling with project-specific adjustments.</p>
-        </article>
-        <article class="dc-feature">
-            <span class="dc-feature-number">03</span>
-            <h3>Next: validation</h3>
-            <p>Run the Django test suite and migration checks before moving into coordinator execution.</p>
-        </article>
+        {% include 'partials/_feature_tile.html' with number='01' heading='Repository inventory' description='Store and inspect a small list of GitHub repositories in Django Admin. Access to the listing is staff-only.' %}
+        {% include 'partials/_feature_tile.html' with number='02' heading='Shared interface' description='One base template, reusable navigation, and Glassmorphism Pro styling with project-specific adjustments.' %}
+        {% include 'partials/_feature_tile.html' with number='03' heading='Next: validation' description='Run the Django test suite and migration checks before moving into coordinator execution.' %}
     </div>
 </section>
 {% endblock %}

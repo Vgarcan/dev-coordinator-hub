@@ -69,6 +69,7 @@ class RepositoryListTests(TestCase):
         )
         self.client.force_login(self.staff)
         response = self.client.get(self.url)
+        self.assertTemplateUsed(response, 'repositories/_repository_card.html')
         self.assertContains(response, 'example/sample')
         self.assertContains(response, 'Test repository')
         self.assertContains(response, 'https://github.com/example/sample')

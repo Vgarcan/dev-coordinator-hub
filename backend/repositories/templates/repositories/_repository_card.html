@@ -1,0 +1,19 @@
+<!-- Presentation only: access permission is enforced by the Django view. -->
+<article class="card dc-panel dc-repository-card">
+    <div class="dc-repository-main">
+        <div>
+            <p class="dc-panel-kicker">GitHub repository</p>
+            <h2 class="dc-repository-name">
+                <a href="{{ repository.github_url }}" target="_blank" rel="noopener noreferrer">{{ repository.full_name }}</a>
+            </h2>
+            {% if repository.description %}
+                <p class="dc-repository-description">{{ repository.description }}</p>
+            {% endif %}
+        </div>
+        <span class="dc-repository-status dc-repository-status-{{ repository.tracking_status }}">{{ repository.get_tracking_status_display }}</span>
+    </div>
+    <div class="dc-repository-meta">
+        <span>Local record</span>
+        <span>Read-only browsing</span>
+    </div>
+</article>
