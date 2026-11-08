@@ -1,0 +1,27 @@
+# Local credentials, deployment configuration and agent session material
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.log
+.claude/settings.local.json
+
+# Local Python runtime and tests
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local private coordination / future runtime state
+runtime-data/
+workspaces/
+private-control/
+logs/
+
+# Editors and operating systems
+.vscode/
+.DS_Store
+Thumbs.db

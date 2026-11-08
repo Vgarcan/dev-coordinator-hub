@@ -1,0 +1,37 @@
+name: "Bug / quality finding"
+description: "Report a reproducible public-safe defect in the project or demo"
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "Do not share real authentication details, tokens or private runtime logs. Sanitise all evidence."
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behaviour
+      description: "What happened? Include affected public view/feature and version."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: "Include browser/platform when relevant; redact sensitive data."
+      value: "1. 
+2. 
+3. "
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact, supporting evidence and test
+      description: "Describe severity, affected requirement IDs and safe evidence."
+    validations:
+      required: false
