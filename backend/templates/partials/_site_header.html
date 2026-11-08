@@ -1,0 +1,23 @@
+<header class="dc-site-header">
+    <div class="container dc-header-layout">
+        <a class="dc-brand" href="{% url 'dashboard:home' %}" aria-label="Dev Coordination Hub home">
+            <span class="dc-brand-mark" aria-hidden="true">D<span class="dc-brand-mark-accent">/</span>H</span>
+            <span class="dc-brand-name">
+                <strong>Dev Coordination Hub</strong>
+                <small>Development workspace</small>
+            </span>
+        </a>
+
+        <!-- Native details/summary keeps mobile navigation usable without JavaScript. -->
+        <details class="dc-menu">
+            <summary class="dc-menu-toggle">Menu <span aria-hidden="true">☰</span></summary>
+            <nav class="dc-nav" aria-label="Primary navigation">
+                <a class="dc-nav-link" href="{% url 'dashboard:home' %}"
+                   {% if request.resolver_match.namespace == 'dashboard' %}aria-current="page"{% endif %}>Overview</a>
+                <a class="dc-nav-link" href="{% url 'repositories:list' %}"
+                   {% if request.resolver_match.namespace == 'repositories' %}aria-current="page"{% endif %}>Repositories</a>
+                <a class="dc-nav-link" href="{% url 'admin:index' %}">Django Admin</a>
+            </nav>
+        </details>
+    </div>
+</header>

@@ -13,6 +13,11 @@ class DashboardHomeTests(SimpleTestCase):
         self.assertContains(response, 'Django foundation ready')
         self.assertContains(response, 'Not connected to agents')
         self.assertTemplateUsed(response, 'dashboard/home.html')
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'partials/_site_header.html')
+        self.assertContains(response, 'dashboard/css/app.css')
+        self.assertContains(response, 'Skip to main content')
+        self.assertContains(response, 'aria-current="page"')
         self.assertContains(response, reverse('repositories:list'))
 
     def test_admin_requires_authentication(self):

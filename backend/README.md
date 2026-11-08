@@ -11,7 +11,8 @@
 5. [Routes and tests](#routes-and-tests)
 6. [Vanilla conventions and deviations](#vanilla-conventions-and-deviations)
 7. [Local repository inventory](#local-repository-inventory)
-8. [Security and next steps](#security-and-next-steps)
+8. [Shared frontend templates](#shared-frontend-templates)
+9. [Security and next steps](#security-and-next-steps)
 
 ## Purpose
 
@@ -158,6 +159,12 @@ This is the first small application feature toward FR-01; it **does not implemen
 Inventory statuses (`candidate`, `tracked`, `archived`) are **descriptive only**. Marking a repository as tracked does not authorise cloning, execution, data access, or use by an agent. No GitHub token or API call is required. Do not enter confidential repository identifiers in an environment exposed to unauthorised users.
 
 The Django page loads the existing public Glassmorphism Pro theme stylesheet. The public GitHub Pages demo is unchanged and cannot read the local SQLite inventory.
+
+## Shared frontend templates
+
+Django's existing `TEMPLATES` configuration now includes `BASE_DIR / 'templates'` for shared layouts while leaving `APP_DIRS=True` unchanged. Both views extend `backend/templates/base.html`, and reusable navigation, status and footer sections live in `backend/templates/partials/`. The UI-specific stylesheet lives at `backend/dashboard/static/dashboard/css/app.css`, keeping Glassmorphism Pro upstream untouched.
+
+See [frontend architecture](../docs/FRONTEND.md) for layout blocks, static asset order, accessibility rules and adding future pages. The responsive appearance still needs live browser inspection once Django can be run locally.
 
 ## Security and next steps
 

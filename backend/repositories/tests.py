@@ -52,6 +52,10 @@ class RepositoryListTests(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'repositories/list.html')
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'partials/_site_header.html')
+        self.assertContains(response, 'dashboard/css/app.css')
+        self.assertContains(response, 'aria-current="page"')
         self.assertContains(response, 'No repositories registered yet.')
 
     def test_staff_sees_registered_repositories(self):

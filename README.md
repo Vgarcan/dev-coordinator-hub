@@ -33,6 +33,7 @@ The page is a **simulated, mobile-first mock-up** with fictional repositories, a
 - [ChatGPT–agent collaboration](docs/CHATGPT_AGENT_COLLABORATION.md) — how ChatGPT plans, recommends, delegates and supervises.
 - [Model selection and budget policy](docs/MODEL_SELECTION_POLICY.md) — verified model choice, reasoning depth and efficiency.
 - [Django backend setup](backend/README.md) — local development, Django Admin and a staff-only repository inventory.
+- [Frontend templates and theme](docs/FRONTEND.md) — shared Django partials and Glassmorphism Pro styling.
 - [Decision register](docs/DECISIONS.md) and [risk register](docs/RISKS.md).
 - [Security](docs/SECURITY.md).
 - [Codex project instructions](AGENTS.md) and [Claude Code project instructions](CLAUDE.md) — small agent briefs; they do **not** replace enforced runtime security.

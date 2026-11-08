@@ -12,6 +12,7 @@
 | --- | --- | --- |
 | [PDD](PDD.md) | Why the product exists, MVP scope, objectives and acceptance | Draft v0.1 for approval |
 | [Architecture](ARCHITECTURE.md) | Logical boundaries, components, trust and deployment | Proposed design |
+| [Django frontend](FRONTEND.md) | Shared templates, partials, responsive layout and Glassmorphism Pro integration | Implemented structure; runtime unverified · #12 |
 | [Requirements](REQUIREMENTS.md) | Testable FR/NFR identifiers and traceability | Initial baseline |
 | [Task protocol](TASK_PROTOCOL.md) | Data, states, approval and review hand-offs | Proposed design |
 | [ChatGPT–agent collaboration](CHATGPT_AGENT_COLLABORATION.md) | Planning, delegation, approval and communication modes | Proposed design · #8 |
