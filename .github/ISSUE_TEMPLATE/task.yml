@@ -1,0 +1,56 @@
+name: "Task / research"
+description: "Track a public-safe, measurable project task or research item"
+title: "[Task] "
+body:
+  - type: markdown
+    attributes:
+      value: "**Public repository.** Do not include credentials, private code, real agent commands, sensitive issues or execution authorisations."
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Delivery phase
+      options:
+        - "Foundation / documentation"
+        - "Phase 0 / feasibility"
+        - "Phase 1 / read-only proof"
+        - "Phase 2 / controlled MVP"
+        - "Phase 3 / pilot"
+        - "Phase 4 / private viewer"
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Required outcome
+      description: "What changes, and why? State one observable deliverable."
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: In scope / out of scope
+      description: "Clarify boundaries, affected public files and operations not authorised."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: "Add testable conditions or evidence. Reference FR/NFR IDs."
+      value: "- [ ] "
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies, risks and open decisions
+      description: "Link Issues or docs and mark unknowns explicitly."
+    validations:
+      required: false
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Verification plan
+      description: "Which tests, PRs, screenshots or observations will prove completion?"
+    validations:
+      required: false

@@ -1,0 +1,42 @@
+name: "Architecture / product decision"
+description: "Record a choice requiring explicit review and an attributable owner decision"
+title: "[Decision] "
+body:
+  - type: markdown
+    attributes:
+      value: "Only public-safe design discussion here. A public Issue cannot authorise live agent execution."
+  - type: textarea
+    id: question
+    attributes:
+      label: Decision required
+      description: "What exactly must be decided and why now?"
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and trade-offs
+      description: "Include the baseline/do-nothing option where relevant."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence, assumptions and risks
+      description: "Separate verified facts from inference and unknowns."
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Recommendation (not yet approved)
+      description: "Proposed option and expected consequences."
+    validations:
+      required: false
+  - type: textarea
+    id: decision
+    attributes:
+      label: Owner decision and follow-up
+      description: "Record only after approval; link the PR updating docs/DECISIONS.md."
+    validations:
+      required: false

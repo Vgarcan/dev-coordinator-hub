@@ -1,63 +1,63 @@
 # Dev Coordination Hub
 
-**Public, interactive user-interface prototype** for a proposed local, GitHub-bridged AI software-development coordinator. Designed mobile-first with [Glassmorphism Pro](https://github.com/Vgarcan/botstrap-css-styles).
+An auditable, human-supervised development coordinator: plan work in ChatGPT, exchange authorised tasks through **private GitHub**, and run bounded Codex CLI / Claude Code jobs on a headless Linux server.
 
-> **Demo only.** This site does not connect to a Linux server, GitHub API, Codex or Claude. All repositories, activities, quotas and approvals shown inside the interface are fictional examples. Buttons change state inside the current browser tab only.
+**Current status: documentation and public UI prototype only.** No coordinator backend, agent runtime or secure command channel is deployed.
+
+> **Public-repository boundary:** this repository and its GitHub Pages demo are public. They must never be used for real agent instructions, confidential repo information, credentials, live audit logs, execution authorisations or operational payloads.
 
 ## Table of contents
 
-1. [Live demo](#live-demo)
-2. [Product idea](#product-idea)
-3. [Repository structure](#repository-structure)
-4. [Local preview](#local-preview)
-5. [Roadmap](#roadmap)
-6. [Security](#security)
-7. [Design system](#design-system)
+1. [Try the public demo](#try-the-public-demo)
+2. [Start with the documentation](#start-with-the-documentation)
+3. [How we collaborate on GitHub](#how-we-collaborate-on-github)
+4. [Product boundaries](#product-boundaries)
+5. [Local preview](#local-preview)
+6. [Design system](#design-system)
 
-## Live demo
+## Try the public demo
 
-After enabling GitHub Pages from the `main` branch and the repository root, the intended URL is:
+[Dev Coordination Hub — GitHub Pages](https://vgarcan.github.io/dev-coordinator-hub/)
 
-https://vgarcan.github.io/dev-coordinator-hub/
+The page is a **simulated, mobile-first mock-up** with fictional repositories, agents, task statuses and usage numbers. It makes no external write requests and does not execute work.
 
-The address is **not verified as published** until GitHub Pages has deployed.
+## Start with the documentation
 
-## Product idea
+- [Documentation index](docs/README.md) — recommended reading order.
+- [Project Definition Document](docs/PDD.md) — objective, boundaries, MVP and approvals.
+- [Architecture](docs/ARCHITECTURE.md) — public UI vs private control vs Linux worker.
+- [Requirements](docs/REQUIREMENTS.md) — traceable functional and nonfunctional requirements.
+- [Roadmap](docs/PROJECT_PLAN.md) — phased delivery and exit gates.
+- [GitHub collaboration](docs/GITHUB_WORKFLOW.md) — issues, PRs, decisions and evidence.
+- [Task protocol](docs/TASK_PROTOCOL.md) — proposed private task and review lifecycle.
+- [Decision register](docs/DECISIONS.md) and [risk register](docs/RISKS.md).
+- [Security](docs/SECURITY.md).
 
-The planned product lets a user choose a code repository, authorize a task and assign it to Codex CLI and/or Claude Code running on a headless Linux server. A coordinator manages task status, approvals, reviews, and audit events. Initially, a private GitHub repository (or other access-controlled GitHub project channel) carries commands and results between ChatGPT and the server. The public demo is **not** that private channel.
+## How we collaborate on GitHub
 
-## Repository structure
+**Issues** hold proposals, defects, research and decisions (public-safe only). **Branches and pull requests** hold changes and their reviews. **Markdown documents** hold approved, durable architecture and product context. The **main branch** stays the reviewed source of truth. See [collaboration rules](docs/GITHUB_WORKFLOW.md) and the issue/PR templates.
 
-- `index.html` — standalone frontend concept, simulated in-memory data.
-- `.nojekyll` — serves static files directly on GitHub Pages.
-- `README.md` — purpose and setup.
-- `docs/PROJECT_PLAN.md` — first-stage implementation plan.
-- `docs/SECURITY.md` — separation of public and private surfaces.
+The future *private control repository* is a separate, access-controlled resource, not this public repository.
+
+## Product boundaries
+
+- User and ChatGPT plan, review and approve; ChatGPT is **not** a continuously-running daemon.
+- The server will eventually fetch approved work using outbound GitHub connections.
+- Agent CLIs will run without VS Code and without root, after authentication/terms-of-use feasibility is established.
+- No public API or open inbound port is required for the initial coordinator.
+- No autonomous merge, deployment, destructive operation, or open-ended agent debate.
+- The 80% subscription reserve is a **desired policy**, not an enforceable limit without official, reliable provider telemetry.
 
 ## Local preview
-
-From the repository root:
 
 ```bash
 python3 -m http.server 8000
 ```
 
-Open `http://localhost:8000/` in a modern browser. The interface currently references the original Glassmorphism Pro stylesheet and optional theme runtime hosted on another public GitHub Pages site; an application-specific CSS fallback is embedded in `index.html`.
-
-## Roadmap
-
-1. Public frontend concept and visual review.
-2. Private Linux coordinator proof of concept: install official CLI tools and verify authorized authentication.
-3. GitHub bridge: structured tasks, state transitions, idempotence and event records.
-4. Isolated workers, repository checkout, automated validation and safe approval gates.
-5. Authenticated private audit viewer integrated with the coordinator.
-
-## Security
-
-This is an intentionally non-operational static demo. **Never place tokens, credentials, private task descriptions, audit events, raw logs or any server secrets in this public repository or in GitHub Pages JavaScript.** The future Django coordinator and sensitive audit data belong on a private, authenticated service. See [Security boundaries](docs/SECURITY.md).
+Open http://localhost:8000/ from this repository root. The demo references the original Glassmorphism Pro styling hosted in the [Bootstrap theme collection](https://github.com/Vgarcan/botstrap-css-styles).
 
 ## Design system
 
-UI styling is adapted from the owner's [Glassmorphism Pro](https://github.com/Vgarcan/botstrap-css-styles) theme. This demo loads the published theme CSS and optional JavaScript runtime from that separate repository. Its upstream files are not copied or relicensed here.
+The public demo uses [Glassmorphism Pro](https://vgarcan.github.io/botstrap-css-styles/?theme=glassmorphism-pro), with the external original CSS/optional theme runtime and app-specific presentation. The theme repository remains independent; do not silently copy or relicense its files.
 
-**Status:** early UI design concept; not production software.
+**Documentation status:** foundation draft for review; no automatic authorisation is implied by merging a documentation PR.
