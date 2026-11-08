@@ -17,7 +17,9 @@
 
 Choose the **least resource-intensive verified model + reasoning configuration that can reliably satisfy the approved acceptance and risk level**. Spending less is a goal, but producing low-quality work or compromising security to save tokens is not acceptable.
 
-This policy is intended for **Codex CLI** and **Claude Code CLI** in the future Dev Coordination Hub, not for AI Hub's general ModelConfig architecture.
+This policy covers future **Codex CLI** and **Claude Code CLI** routing, with an
+optional **LOCAL_LLM** trial for very low-risk, verifiable text classification.
+It does not apply to AI Hub's general ModelConfig architecture.
 
 ## 2. Dynamic model inventory
 
@@ -36,6 +38,7 @@ The coordinator must discover/configure for each CLI adapter:
 | Work class | Preferred capability / examples | Desired depth | Reviewer decision |
 | --- | --- | --- | --- |
 | **Deterministic**: known checks, format, Git metadata | **NO_AI**; ordinary code/tools | None | No LLM |
+| **Low-risk classification (pilot)**: synthetic error category | Optional local Ollama model, after benchmark | Bounded prompt and fixed label set | Deterministic output validation; not trusted for decisions |
 | **Low**: small text/isolated change | Lowest suitable **available** Codex profile or Claude Haiku-family | Low (where supported) | Usually none; deterministic checks |
 | **Medium**: bounded feature, Django bug, tests | Mid capability Codex profile or Claude Sonnet-family | Medium (where supported) | Selectively; only if it improves confidence |
 | **High**: difficult implementation, tricky RAG/concurrency | Strong Codex profile or Claude Sonnet/Opus-family as appropriate | High (where supported) | Independent review usually justified |
@@ -101,3 +104,19 @@ Do not build a complicated routing model before a small test set proves that it 
 **Security-critical migration:** request explicit owner approval, strong allowed model for analysis, independent review and deterministic database tests; do not auto-merge.
 
 In all cases ChatGPT's proposal is **advice**; the future Linux coordinator validates and enforces permissions. This public repo does not operate the model router yet.
+
+
+## Local Ollama pilot — no automatic delegation
+
+A small offline-testable Ollama adapter is available in
+`backend/local_llm/ollama.py`; usage is disabled by default. This is an
+**experimental diagnostic classifier**, not a job runner or an approved
+model tier. It accepts at most 1,200 characters and only four output labels.
+Use only invented or explicitly cleared non-sensitive text. Six fictional
+cases in `backend/local_llm/fixtures.py` provide a quick smoke check; their
+score does not prove general capability or production quality.
+
+Do not route tasks to this adapter, elevate its verdicts to approvals, or
+automatically escalate to paid services. First collect measured quality,
+latency and memory information on the intended local system, then make a
+separate owner-reviewed routing decision. See [local-model guide](LOCAL_LLM.md).

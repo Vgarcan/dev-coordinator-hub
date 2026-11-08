@@ -59,6 +59,12 @@ repositories/
 └── templates/repositories/list.html
 ```
 
+## Optional local Ollama pilot
+
+For a strictly read-only, **opt-in** Ollama adapter and six synthetic
+classification examples, see [Local Ollama pilot](../docs/LOCAL_LLM.md).
+This does not start an agent, change repositories or enable auto-routing.
+
 ## Guided installer with Python selection
 
 The optional [local installer](INSTALLER.md) discovers installed Python
