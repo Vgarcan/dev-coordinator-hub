@@ -80,3 +80,45 @@ def task_list(request):
         'selected_status': selected_status,
         'is_filtered': bool(selected_status),
     })
+
+# Fictional capability catalogue: labels are design intent, not live discovery.
+# Do not infer CLI availability, Ollama inventory, authentication or GPU usage.
+DEMO_AGENT_PROFILES = (
+    {
+        'id': '01',
+        'key': 'codex',
+        'name': 'Codex CLI',
+        'category': 'External CLI · proposed',
+        'role': 'Scoped implementation',
+        'summary': 'Potentially handles bounded code changes and test-driven fixes.',
+        'appropriate_for': 'A reviewed task with a precise repository scope and acceptance checks.',
+        'guardrail': 'No execution until CLI eligibility, credentials and sandbox policy are validated.',
+    },
+    {
+        'id': '02',
+        'key': 'claude',
+        'name': 'Claude Code',
+        'category': 'External CLI · proposed',
+        'role': 'Implementation or independent review',
+        'summary': 'Potentially reviews another worker’s diff or implements a separately approved task.',
+        'appropriate_for': 'Evidence-based review with the approved specification and relevant changes.',
+        'guardrail': 'Organisation permission and supported headless usage remain unverified.',
+    },
+    {
+        'id': '03',
+        'key': 'ollama',
+        'name': 'Ollama · local',
+        'category': 'Local model · experimental',
+        'role': 'Small, low-risk diagnostics',
+        'summary': 'A future option for narrow classifications with deterministic validation.',
+        'appropriate_for': 'Non-sensitive text examples after measuring quality on the local machine.',
+        'guardrail': 'The separate opt-in smoke pilot is not connected to this page or task dispatch.',
+    },
+)
+
+
+def agent_gallery(request):
+    """Render an invented, read-only catalogue; never probe or start agents."""
+    return render(request, 'dashboard/agents.html', {
+        'agents': DEMO_AGENT_PROFILES,
+    })

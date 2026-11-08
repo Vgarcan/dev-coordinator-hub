@@ -93,3 +93,42 @@ class DotenvConfigurationTests(SimpleTestCase):
         with tempfile.TemporaryDirectory() as directory:
             missing = Path(directory) / 'missing.env'
             self.assertFalse(load_dotenv(dotenv_path=missing, override=False))
+
+class DashboardAgentGalleryTests(SimpleTestCase):
+    """A public-safe role preview is never mistaken for live agent inventory."""
+
+    def test_gallery_renders_three_fictional_profiles(self):
+        response = self.client.get(reverse('dashboard:agents'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'dashboard/agents.html')
+        self.assertTemplateUsed(response, 'dashboard/_agent_card.html')
+        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'partials/_nav_links.html')
+        self.assertEqual(
+            [agent['key'] for agent in response.context['agents']],
+            ['codex', 'claude', 'ollama'],
+        )
+        self.assertContains(response, 'Codex CLI')
+        self.assertContains(response, 'Claude Code')
+        self.assertContains(response, 'Ollama')
+        self.assertContains(response, 'Concept only')
+        self.assertContains(response, 'Not connected')
+
+    def test_gallery_has_no_agent_controls_or_backend_probes(self):
+        response = self.client.get(reverse('dashboard:agents'))
+        self.assertNotContains(response, 'method="post"')
+        self.assertNotContains(response, 'Run agent')
+        self.assertNotContains(response, 'Connect agent')
+        self.assertNotContains(response, 'Approve task')
+        self.assertContains(response, 'No authentication, model availability,')
+
+    def test_navigation_marks_only_agents_active(self):
+        response = self.client.get(reverse('dashboard:agents'))
+        rendered = response.content.decode('utf-8')
+        # Template whitespace between attributes is intentional.
+        self.assertRegex(rendered, r'href="/agents/"\s+aria-current="page"')
+        self.assertNotRegex(rendered, r'href="/"\s+aria-current="page"')
+
+    def test_overview_links_to_gallery(self):
+        response = self.client.get(reverse('dashboard:home'))
+        self.assertContains(response, reverse('dashboard:agents'))

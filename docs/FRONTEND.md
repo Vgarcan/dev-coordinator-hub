@@ -11,6 +11,7 @@
 5. [How to add a page](#how-to-add-a-page)
 6. [Validation and boundaries](#validation-and-boundaries)
 7. [Repository inventory filters](#repository-inventory-filters)
+8. [Fictional agent-role gallery](#fictional-agent-role-gallery)
 
 ## Objective
 
@@ -27,6 +28,9 @@ Make the local Django frontend navigable and maintainable while preserving a fam
 | `backend/templates/partials/_status_strip.html` | Static non-operational status disclaimer |
 | `backend/templates/partials/_site_footer.html` | Small common footer |
 | `backend/dashboard/templates/dashboard/home.html` | Django home/overview |
+| `backend/dashboard/templates/dashboard/agents.html` | Fictional agent roles, not a connection status page |
+| `backend/dashboard/templates/dashboard/_agent_card.html` | Repeated presentation-only agent profile |
+| `backend/dashboard/static/dashboard/css/agents.css` | Agent-page-only responsive styling |
 | `backend/repositories/templates/repositories/list.html` | Staff-only inventory page and empty state |
 | `backend/repositories/templates/repositories/_repository_card.html` | Reusable, presentation-only repository card |
 | `backend/dashboard/static/dashboard/css/app.css` | App-only presentation and responsive adjustments |
@@ -82,3 +86,27 @@ or disclose data to anonymous users.
 Source inspection confirms the intended view/template/test references. Actual
 Django tests and browser visual checks are still pending until an environment
 with Django installed is available.
+
+
+## Fictional agent-role gallery
+
+`/agents/` is a **public-safe, static Django demo**, not an agent manager.
+It shows ChatGPT in a coordination/review role and exactly three invented
+*potential worker* profiles: Codex CLI, Claude Code and Ollama local. All
+profiles are explicitly labelled *Not connected*. They are generated from
+fixed presentation data in `dashboard/views.py` and rendered through
+`dashboard/_agent_card.html`, the shared base layout and the dedicated
+`dashboard/css/agents.css` stylesheet. The existing Glassmorphism Pro
+stylesheet is unchanged.
+
+The screen includes no models, database tables, API polling, network
+connection, credentials, CLI execution, activation controls, task dispatch,
+permissions or usage telemetry. It does **not** connect to the separate,
+opt-in Ollama diagnostic pilot. Navigation is reused on desktop and mobile,
+with `aria-current` applied only to the active Django page. Mobile uses
+a single editorial column, widening to two and then three columns.
+
+`DashboardAgentGalleryTests` in `dashboard/tests.py` checks routing,
+templates, content, absence of execution controls and navigation. Django
+runtime tests and visual viewport checks remain **pending** until run in a
+suitable environment. The GitHub Pages prototype is unchanged.

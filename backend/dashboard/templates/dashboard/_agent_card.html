@@ -1,0 +1,22 @@
+{# Reused presentation component. All content is fixed demo metadata. #}
+<article class="dc-agent-card" aria-labelledby="agent-{{ agent.key }}">
+    <div class="dc-agent-card-heading">
+        <span class="dc-agent-sequence">{{ agent.id }}</span>
+        <span class="dc-agent-status">Not connected</span>
+    </div>
+    <p class="dc-agent-category">{{ agent.category }}</p>
+    <h3 id="agent-{{ agent.key }}" class="dc-agent-title">{{ agent.name }}</h3>
+    <p class="dc-agent-role">{{ agent.role }}</p>
+    <p class="dc-agent-summary">{{ agent.summary }}</p>
+    <dl class="dc-agent-details">
+        <div>
+            <dt>Potential fit</dt>
+            <dd>{{ agent.appropriate_for }}</dd>
+        </div>
+        <div>
+            <dt>Boundary</dt>
+            <dd>{{ agent.guardrail }}</dd>
+        </div>
+    </dl>
+    <p class="dc-agent-card-footer">Illustrative profile · No dispatch available</p>
+</article>

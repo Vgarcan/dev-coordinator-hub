@@ -1,0 +1,68 @@
+/*
+ * Fictional agent-role gallery, mobile-first and read-only.
+ * Uses established design tokens without modifying Glassmorphism Pro.
+ */
+.dc-agents-disclaimer {
+    margin: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+    padding: 1.1rem 0 1.1rem 1.3rem;
+    border-left: 2px solid var(--dc-teal);
+    max-width: 70ch;
+    color: var(--dc-soft);
+    line-height: 1.7;
+    background: linear-gradient(90deg, rgba(118, 208, 184, .065), transparent 88%);
+}
+.dc-agents-disclaimer strong { color: var(--dc-ink); }
+.dc-agents-coordination {
+    margin-top: clamp(3.5rem, 8vw, 6rem);
+    border-top: 1px solid var(--dc-line);
+    padding-top: 1.5rem;
+}
+.dc-agents-overline { display: flex; align-items: center; gap: 1rem; }
+.dc-agents-overline .dc-eyebrow { margin: 0; }
+.dc-agents-section-number { font-family: var(--dc-editorial, Georgia, serif); font-size: 1.5rem; color: var(--dc-teal); }
+.dc-agents-coordination-content { display: grid; gap: 1.2rem; margin-top: 1.5rem; }
+.dc-agents-coordinator-title {
+    font-family: var(--dc-editorial, Georgia, serif);
+    font-size: clamp(2.05rem, 5vw, 3.3rem);
+    font-weight: 400;
+    letter-spacing: -.035em;
+    margin: 0 0 1rem;
+}
+.dc-agents-coordinator-title em { color: var(--dc-teal); }
+.dc-agents-coordination-content p { color: var(--dc-soft); line-height: 1.75; margin: 0; max-width: 60ch; }
+.dc-agents-coordination-note { border-top: 1px solid var(--dc-line); padding-top: .9rem; font-size: .9rem; }
+.dc-agents-section { margin-top: clamp(3rem, 7vw, 5rem); }
+.dc-agents-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+.dc-agent-card {
+    min-width: 0;
+    border-top: 2px solid rgba(118, 208, 184, .7);
+    padding: 1.35rem 0 1.1rem;
+}
+.dc-agent-card-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .6rem; }
+.dc-agent-sequence { color: var(--dc-teal); font-family: var(--dc-editorial, Georgia, serif); font-size: 1.65rem; }
+.dc-agent-status { color: var(--dc-muted); font-size: .77rem; }
+.dc-agent-category { margin: 1.5rem 0 .55rem; color: var(--dc-muted); letter-spacing: .09em; text-transform: uppercase; font-size: .7rem; font-weight: 700; }
+.dc-agent-title { margin: 0; font: 400 clamp(1.75rem, 4vw, 2.4rem)/1.17 var(--dc-editorial, Georgia, serif); }
+.dc-agent-role { color: var(--dc-teal); font-size: .93rem; font-weight: 650; margin: 1.05rem 0; }
+.dc-agent-summary { color: var(--dc-soft); line-height: 1.75; }
+.dc-agent-details { margin: 1.7rem 0 0; }
+.dc-agent-details div { border-top: 1px solid var(--dc-line); padding: .9rem 0; }
+.dc-agent-details dt { margin-bottom: .35rem; color: var(--dc-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; }
+.dc-agent-details dd { margin: 0; color: var(--dc-soft); line-height: 1.65; font-size: .9rem; overflow-wrap: anywhere; }
+.dc-agent-card-footer { margin: 1rem 0 0; color: var(--dc-muted); font-size: .75rem; }
+.dc-agents-next {
+    margin-top: clamp(3.5rem, 8vw, 5rem);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--dc-line);
+    display: flex; flex-wrap: wrap; gap: 1.5rem 2rem;
+    justify-content: space-between; align-items: end;
+}
+.dc-agents-next h2 { font: 400 clamp(1.5rem, 4vw, 2.3rem) var(--dc-editorial, Georgia, serif); margin: 0 0 .75rem; }
+.dc-agents-next p:not(.dc-eyebrow) { color: var(--dc-muted); line-height: 1.7; max-width: 62ch; margin: 0; }
+@media (min-width: 768px) {
+    .dc-agents-coordination-content { grid-template-columns: minmax(0, 1.7fr) minmax(0, .75fr); align-items: end; gap: 2rem; }
+    .dc-agents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+}
+@media (min-width: 1100px) {
+    .dc-agents-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

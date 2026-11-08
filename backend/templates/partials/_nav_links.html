@@ -3,6 +3,8 @@
    {% if request.resolver_match.view_name == 'dashboard:home' %}aria-current="page"{% endif %}>Overview</a>
 <a class="dc-nav-link" href="{% url 'dashboard:tasks' %}"
    {% if request.resolver_match.view_name == 'dashboard:tasks' %}aria-current="page"{% endif %}>Tasks (demo)</a>
+<a class="dc-nav-link" href="{% url 'dashboard:agents' %}"
+   {% if request.resolver_match.view_name == 'dashboard:agents' %}aria-current="page"{% endif %}>Agents (demo)</a>
 <a class="dc-nav-link" href="{% url 'repositories:list' %}"
    {% if request.resolver_match.namespace == 'repositories' %}aria-current="page"{% endif %}>Repositories</a>
 <a class="dc-nav-link dc-nav-admin" href="{% url 'admin:index' %}">Django Admin <span aria-hidden="true">↗</span></a>

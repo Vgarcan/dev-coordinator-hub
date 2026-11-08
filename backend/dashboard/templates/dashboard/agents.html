@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Agent roles demo — Dev Coordination Hub{% endblock %}
+{% block meta_description %}Read-only preview of future coordinator roles; no agents connected{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'dashboard/css/agents.css' %}">{% endblock %}
+
+{% block content %}
+<section class="dc-page-intro" aria-labelledby="agents-title">
+    <p class="dc-eyebrow"><span class="dc-eyebrow-line" aria-hidden="true"></span> Workspace / Agents</p>
+    <h1 id="agents-title" class="dc-display dc-display-compact">Agent <em>roles</em></h1>
+    <p class="dc-lead">A preview of how the coordinator could assign work, use local models and request independent review.</p>
+
+    <p class="dc-agents-disclaimer" role="note">
+        <strong>Concept only.</strong> These profiles describe proposed roles, not live connections.
+        No agents are connected to this Django screen. No authentication, model availability,
+        GPU usage or execution readiness has been verified here.
+    </p>
+</section>
+
+<section class="dc-agents-coordination" aria-labelledby="coordinator-title">
+    <div class="dc-agents-overline">
+        <span class="dc-agents-section-number" aria-hidden="true">00</span>
+        <span class="dc-eyebrow">Coordination layer</span>
+    </div>
+    <div class="dc-agents-coordination-content">
+        <div>
+            <h2 id="coordinator-title" class="dc-agents-coordinator-title">ChatGPT <em>coordinates</em></h2>
+            <p>In conversation, ChatGPT can help define goals, suggest tools and review evidence.
+                It is not an always-on server worker or an independent approval authority.</p>
+        </div>
+        <p class="dc-agents-coordination-note">Human approval and deterministic checks remain separate from model recommendations.</p>
+    </div>
+</section>
+
+<section class="dc-section dc-agents-section" aria-labelledby="workers-title">
+    <div class="dc-section-heading">
+        <div>
+            <p class="dc-eyebrow">Potential executors / No connections</p>
+            <h2 id="workers-title">Three possible worker types</h2>
+        </div>
+    </div>
+    <div class="dc-agents-grid">
+        {% for agent in agents %}
+            {% include 'dashboard/_agent_card.html' with agent=agent %}
+        {% endfor %}
+    </div>
+</section>
+
+<section class="dc-agents-next" aria-labelledby="agents-next-title">
+    <div>
+        <p class="dc-eyebrow">Development boundary</p>
+        <h2 id="agents-next-title">One agent at a time, to start.</h2>
+        <p>Multi-agent parallelism is a future, measured option—not a default.
+            The local Ollama pilot is separate and opt-in; this page never calls it.</p>
+    </div>
+    <a class="dc-button dc-button-secondary" href="{% url 'dashboard:tasks' %}">Explore the task workflow <span aria-hidden="true">↗</span></a>
+</section>
+{% endblock %}

@@ -11,4 +11,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     # Public-safe presentation only; never dispatches or approves work.
     path('tasks/', views.task_list, name='tasks'),
+    # Fictional capability catalogue; no CLI or local LLM is queried.
+    path('agents/', views.agent_gallery, name='agents'),
 ]
