@@ -1,0 +1,12 @@
+{# Fixed, fictional guidance only. Never render raw CLI prompts, tokens or OAuth URLs. #}
+<div class="dc-auth-help" role="note" aria-label="Illustrative manual sign-in">
+    <p class="dc-auth-help-title">Human action required — demo only</p>
+    {% if task.auth_provider == 'codex' %}
+        <p>For a future Codex CLI session, open a trusted SSH terminal as the same non-root Linux account that runs the worker. For a headless server, prefer <code>codex login --device-auth</code> when enabled, or follow <code>codex login</code> prompts otherwise.</p>
+    {% elif task.auth_provider == 'claude' %}
+        <p>For a future Claude Code session, open a trusted SSH terminal as the same non-root Linux account that runs the worker. Start the official sign-in flow manually with <code>claude auth login</code> and follow its prompts.</p>
+    {% else %}
+        <p>Unknown provider. Keep the task paused and ask an administrator to investigate.</p>
+    {% endif %}
+    <p>No credentials or device codes belong in this dashboard. Confirm official provider websites independently. A future private coordinator must verify the session, reconcile any partial work and recheck the task approval before resuming. This page cannot sign you in.</p>
+</div>

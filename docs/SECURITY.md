@@ -29,6 +29,12 @@ GitHub Pages is static and public; a client-side 'password' or hidden button is 
 - Reject replayed, altered, expired and unauthorised tasks; record why a command was blocked.
 - No automatic release of new capabilities or unrestricted agent-tool permissions after model suggestion.
 
+### Reauthentication: human in the loop
+
+If a future Codex/Claude CLI worker loses authentication, the specific task may enter `AUTH_REQUIRED` and pause. The private control plane may expose only a redacted provider name and safe manual guidance to an authorised user, **never** untrusted CLI terminal output, login links, browser codes, OAuth tokens, or passwords. No public Django route, GitHub Pages UI, or agent may provide an unrestricted terminal / RCE capability or accept credentials through an application form.
+
+Manual sign-in happens in a trusted SSH session as the same non-root OS account that operates that CLI. The CLI manages its own per-user credentials; do not copy login tokens into `.env`, public files, issue comments or model conversations. Treat codes and URLs as phishing-sensitive: verify the provider's legitimate domain independently. A future coordinator must independently recheck the CLI's authentication state, authorisation expiry and task-version approval before unpausing. Reconcile any partially completed worker execution first; no automatic retry or remote login is authorised by the demo.
+
 ## Host and agent isolation
 
 - Admin may use root/sudo for setup; the coordinator and agent execution accounts must not.

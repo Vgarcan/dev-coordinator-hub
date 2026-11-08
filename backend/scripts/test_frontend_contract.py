@@ -76,6 +76,21 @@ class FrontendSourceContractTests(unittest.TestCase):
             self.assertNotIn('method="post"', markup)
             self.assertNotIn("<script", markup)
 
+    def test_auth_required_help_is_display_only(self):
+        views = source(BACKEND / "dashboard" / "views.py")
+        card = source(TEMPLATES / "_task_card.html")
+        help_markup = source(TEMPLATES / "_auth_required_help.html")
+        protocol = source(BACKEND.parent / "docs" / "TASK_PROTOCOL.md")
+        self.assertIn("('auth_required', 'Authentication required')", views)
+        self.assertIn("'auth_provider': 'codex'", views)
+        self.assertIn("'auth_provider': 'claude'", views)
+        self.assertIn("task.status == 'auth_required'", card)
+        self.assertIn("AUTH_REQUIRED", protocol)
+        self.assertIn("same non-root Linux account", help_markup)
+        self.assertNotIn("<form", help_markup)
+        self.assertNotIn("<script", help_markup)
+        self.assertNotIn('method="post"', help_markup)
+
     def test_untrusted_agent_details_remain_fictional(self):
         agents = source(TEMPLATES / "agents.html")
         self.assertIn("Concept only", agents)

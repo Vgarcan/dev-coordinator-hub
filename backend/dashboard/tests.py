@@ -44,7 +44,7 @@ class DashboardTaskDemoTests(SimpleTestCase):
         self.assertContains(response, 'Simulation only')
         self.assertContains(response, 'No agents are connected')
         self.assertContains(response, 'DEMO-001')
-        self.assertEqual(len(response.context['tasks']), 4)
+        self.assertEqual(len(response.context['tasks']), 6)
 
     def test_status_filter_is_read_only(self):
         response = self.client.get(reverse('dashboard:tasks'), {'status': 'review'})
@@ -55,7 +55,7 @@ class DashboardTaskDemoTests(SimpleTestCase):
     def test_unknown_status_does_not_change_results(self):
         response = self.client.get(reverse('dashboard:tasks'), {'status': 'untrusted'})
         self.assertFalse(response.context['is_filtered'])
-        self.assertEqual(len(response.context['tasks']), 4)
+        self.assertEqual(len(response.context['tasks']), 6)
 
     def test_no_mock_records_for_a_valid_status(self):
         response = self.client.get(reverse('dashboard:tasks'), {'status': 'running'})
@@ -67,6 +67,27 @@ class DashboardTaskDemoTests(SimpleTestCase):
         self.assertNotContains(response, 'method="post"')
         self.assertNotContains(response, 'Run agent')
         self.assertNotContains(response, 'Approve task')
+
+    def test_auth_required_is_a_read_only_provider_bound_pause(self):
+        response = self.client.get(reverse('dashboard:tasks'), {
+            'status': 'auth_required',
+        })
+        self.assertEqual(
+            [(item['id'], item['auth_provider']) for item in response.context['tasks']],
+            [('DEMO-005', 'codex'), ('DEMO-006', 'claude')],
+        )
+        self.assertTemplateUsed(response, 'dashboard/_auth_required_help.html')
+        self.assertContains(response, 'Authentication required')
+        self.assertContains(response, 'codex login')
+        self.assertContains(response, 'claude auth login')
+        self.assertContains(response, 'No credentials or device codes')
+        self.assertNotContains(response, 'method="post"')
+        self.assertNotContains(response, '<input type="password"')
+
+    def test_normal_task_filters_never_show_auth_instructions(self):
+        response = self.client.get(reverse('dashboard:tasks'), {'status': 'review'})
+        self.assertNotContains(response, 'codex login')
+        self.assertNotContains(response, 'claude auth login')
 
 class DotenvConfigurationTests(SimpleTestCase):
     """Local .env is optional and never overwrites process configuration."""

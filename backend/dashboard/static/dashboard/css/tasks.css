@@ -15,6 +15,7 @@
 .dc-task-id { font-size: .76rem; font-weight: 750; letter-spacing: .08em; color: var(--dc-muted); }
 .dc-task-state { display: inline-block; padding: .36rem .72rem; border-radius: 99rem; border: 1px solid var(--dc-line); color: var(--dc-soft); font-size: .76rem; font-weight: 650; }
 .dc-task-state-ready, .dc-task-state-review { color: var(--dc-teal); border-color: rgba(118,208,184,.46); }
+.dc-task-state-auth_required { color: #ffd79c; border-color: rgba(255,215,156,.55); }
 .dc-task-state-blocked, .dc-task-state-failed { color: #ffc2cd; border-color: rgba(255,185,197,.45); }
 .dc-task-title { margin: 1.1rem 0 .65rem; font-size: clamp(1.2rem,3vw,1.6rem); line-height: 1.3; font-weight: 600; }
 .dc-task-description { color: var(--dc-soft); line-height: 1.7; }
@@ -23,6 +24,12 @@
 .dc-task-details dt { color: var(--dc-muted); font-size: .8rem; font-weight: 400; }
 .dc-task-details dd { color: var(--dc-ink); font-size: .82rem; margin: 0; text-align: right; overflow-wrap: anywhere; }
 .dc-task-foot { margin: 1.1rem 0 0; font-size: .75rem; color: var(--dc-muted); }
+/* Human-in-the-loop guidance is a passive note, not a login control. */
+.dc-auth-help { margin-top: 1.2rem; padding: 1rem 0 0; border-top: 1px solid var(--dc-line); }
+.dc-auth-help-title { font-size: .77rem; text-transform: uppercase; letter-spacing: .075em; font-weight: 700; color: #ffd79c; margin-bottom: .65rem; }
+.dc-auth-help p { color: var(--dc-soft); line-height: 1.65; font-size: .85rem; }
+.dc-auth-help code { color: #f7f9ff; overflow-wrap: anywhere; }
+
 .dc-task-empty { grid-column: 1 / -1; }
 .dc-task-steps { display: grid; gap: 1.25rem; list-style: none; padding: 0; margin: 1.5rem 0 0; counter-reset: stage; }
 .dc-task-steps li { border-top: 1px solid var(--dc-line); padding-top: 1.3rem; display: grid; gap: .6rem; align-content: start; counter-increment: stage; }

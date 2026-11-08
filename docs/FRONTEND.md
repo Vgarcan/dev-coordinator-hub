@@ -12,6 +12,7 @@
 6. [Validation and boundaries](#validation-and-boundaries)
 7. [Repository inventory filters](#repository-inventory-filters)
 8. [Fictional agent-role gallery](#fictional-agent-role-gallery)
+9. [Authentication pause preview](#authentication-pause-preview)
 
 ## Objective
 
@@ -139,3 +140,22 @@ installing dependencies. The current execution environment has Chromium but
 cannot install Django because its package index is unreachable. A real
 viewport review should cover 320, 390, 768, 1024 and 1440 px, keyboard
 disclosure and focus states, and external CSS availability.
+
+
+## Authentication pause preview
+
+The public-safe Django `/tasks/` mock includes two additional **fictional**
+tasks in `AUTH_REQUIRED`, explicitly attached to `codex` and `claude`
+respectively. The task cards use `dashboard/_auth_required_help.html` for
+provider-specific **manual** SSH/CLI login guidance. `Authentication required`
+is available in the read-only GET filter, and its display label comes from
+the fixed allowlisted status catalogue.
+
+No CLI process is launched, no live authentication status is inferred, no
+credentials or one-time codes are displayed, and no browser login or remote
+execution feature exists. This demo does **not** authorise work on any server.
+Real authentication events will require a private, protected task service and
+the trust gates in [the task protocol](TASK_PROTOCOL.md) and
+[security policy](SECURITY.md).
+
+Django runtime tests and real full-page browser validation remain pending.

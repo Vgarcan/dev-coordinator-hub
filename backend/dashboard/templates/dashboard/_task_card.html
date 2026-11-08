@@ -2,7 +2,7 @@
 <article class="card dc-panel dc-task-card" aria-labelledby="task-{{ task.id }}">
     <div class="dc-task-card-top">
         <span class="dc-task-id">{{ task.id }}</span>
-        <span class="dc-task-state dc-task-state-{{ task.status }}">{{ task.get_status_display|default:task.status|title }}</span>
+        <span class="dc-task-state dc-task-state-{{ task.status }}">{{ task.status_label }}</span>
     </div>
     <h2 id="task-{{ task.id }}" class="dc-task-title">{{ task.title }}</h2>
     <p class="dc-task-description">{{ task.description }}</p>
@@ -11,5 +11,8 @@
         <div><dt>Agent</dt><dd>{{ task.agent }}</dd></div>
         <div><dt>Illustrative next step</dt><dd>{{ task.next_step }}</dd></div>
     </dl>
+    {% if task.status == 'auth_required' %}
+        {% include 'dashboard/_auth_required_help.html' with task=task %}
+    {% endif %}
     <p class="dc-task-foot">Fictional example · No execution available</p>
 </article>

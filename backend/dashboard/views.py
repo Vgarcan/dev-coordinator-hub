@@ -45,6 +45,26 @@ DEMO_TASKS = (
         'agent': 'Unassigned',
         'next_step': 'No action available in this demo',
     },
+    {
+        'id': 'DEMO-005',
+        'title': 'Codex session needs attention',
+        'description': 'Illustrate an expired CLI sign-in before any authorised work starts.',
+        'repository': 'example/auth-codex',
+        'status': 'auth_required',
+        'agent': 'Codex CLI (fictional)',
+        'auth_provider': 'codex',
+        'next_step': 'Sign in manually; verify and reconcile before any future resumption.',
+    },
+    {
+        'id': 'DEMO-006',
+        'title': 'Claude Code session needs attention',
+        'description': 'Illustrate the same pause for a different CLI provider.',
+        'repository': 'example/auth-claude',
+        'status': 'auth_required',
+        'agent': 'Claude Code (fictional)',
+        'auth_provider': 'claude',
+        'next_step': 'Sign in manually; verify and reconcile before any future resumption.',
+    },
 )
 
 # Display labels reflect docs/TASK_PROTOCOL.md; this does not validate transitions.
@@ -52,6 +72,7 @@ DEMO_STATUS_CHOICES = (
     ('draft', 'Draft'),
     ('ready', 'Ready'),
     ('preparing', 'Preparing'),
+    ('auth_required', 'Authentication required'),
     ('running', 'Running'),
     ('review', 'Review'),
     ('waiting_approval', 'Waiting approval'),
@@ -69,8 +90,11 @@ def task_list(request):
     if selected_status not in allowed:
         selected_status = ''
 
+    # The display label is sourced from the one allowlisted state catalogue.
+    status_labels = dict(DEMO_STATUS_CHOICES)
     tasks = [
-        task for task in DEMO_TASKS
+        {**task, 'status_label': status_labels[task['status']]}
+        for task in DEMO_TASKS
         if not selected_status or task['status'] == selected_status
     ]
     return render(request, 'dashboard/tasks.html', {

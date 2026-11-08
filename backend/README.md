@@ -162,7 +162,7 @@ proposed review-only integration and its required security decisions.
 | --- | --- | --- |
 | `/` | `dashboard.urls` → `dashboard.views.home` | Template-only landing page |
 | `/admin/` | `django.contrib.admin` | Standard Django admin with default authentication |
-| `/tasks/` | `dashboard.urls` → `dashboard.views.task_list` | Fictional read-only task lifecycle demo |
+| `/tasks/` | `dashboard.urls` → `dashboard.views.task_list` | Fictional read-only lifecycle demo, including provider-bound `AUTH_REQUIRED` manual login guidance |
 | `/agents/` | `dashboard.urls` → `dashboard.views.agent_gallery` | Fictional roles for ChatGPT/Codex/Claude/Ollama; no agent connection |
 | `/repositories/` | `repositories.urls` → `repositories.views.repository_list` | Staff-only local inventory; no GitHub requests |
 
@@ -216,7 +216,7 @@ The Django page loads the existing public Glassmorphism Pro theme stylesheet. Th
 
 Django's existing `TEMPLATES` configuration now includes `BASE_DIR / 'templates'` for shared layouts while leaving `APP_DIRS=True` unchanged. Both views extend `backend/templates/base.html`, and reusable navigation, status and footer sections live in `backend/templates/partials/`. The UI-specific stylesheet lives at `backend/dashboard/static/dashboard/css/app.css`, keeping Glassmorphism Pro upstream untouched.
 
-See [frontend architecture](../docs/FRONTEND.md) for layout blocks, static asset order, accessibility rules and adding future pages. The `/agents/` catalogue is a presentation-only preview, not live CLI or Ollama connectivity. The responsive appearance still needs live browser inspection once Django can be run locally.
+See [frontend architecture](../docs/FRONTEND.md) for layout blocks, static asset order, accessibility rules and adding future pages. The `/agents/` catalogue is a presentation-only preview, not live CLI or Ollama connectivity. The `/tasks/` mock includes a provider-specific `AUTH_REQUIRED` pause without executing shell commands, collecting credentials or claiming real login detection. The responsive appearance still needs live browser inspection once Django can be run locally.
 
 ## Security and next steps
 
