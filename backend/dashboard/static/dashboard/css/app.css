@@ -111,6 +111,9 @@ body.dc-shell {
 .dc-menu-toggle::marker { content: ""; }
 .dc-menu-icon { display: grid; gap: .28rem; width: 1.15rem; }
 .dc-menu-icon span { display: block; height: 2px; background: var(--dc-teal); border-radius: 1rem; }
+/* Author-level display:grid would otherwise override the browser's closed
+ * <details> behaviour and leave mobile links visible at all times. */
+.dc-mobile-menu:not([open]) > .dc-mobile-nav { display: none; }
 .dc-mobile-nav {
     display: grid;
     gap: .25rem;
@@ -284,10 +287,14 @@ body.dc-shell {
 .dc-footer-content { display: flex; gap: 1rem; justify-content: space-between; flex-wrap: wrap; align-items: center; }
 .dc-footer a { color: var(--dc-soft); text-underline-offset: .25em; }
 
-@media (min-width: 768px) {
+/* Keep the compact menu on tablet screens: five desktop links plus
+ * branding cannot fit reliably at the Bootstrap md breakpoint. */
+@media (min-width: 1200px) {
     .dc-header-layout { flex-wrap: nowrap; }
     .dc-desktop-nav { display: flex; align-items: center; gap: .25rem; }
     .dc-mobile-menu { display: none; }
+}
+@media (min-width: 768px) {
     .dc-hero { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 3rem; }
     .dc-feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; }
     .dc-page-heading { flex-direction: row; justify-content: space-between; align-items: end; }

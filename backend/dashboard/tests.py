@@ -23,6 +23,8 @@ class DashboardHomeTests(SimpleTestCase):
         self.assertContains(response, 'Skip to main content')
         self.assertContains(response, 'aria-current="page"')
         self.assertContains(response, reverse('repositories:list'))
+        self.assertContains(response, reverse('dashboard:tasks'))
+        self.assertContains(response, reverse('dashboard:agents'))
 
     def test_admin_requires_authentication(self):
         """The standard Django admin must not expose its index anonymously."""

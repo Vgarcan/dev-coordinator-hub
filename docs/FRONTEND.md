@@ -110,3 +110,32 @@ a single editorial column, widening to two and then three columns.
 templates, content, absence of execution controls and navigation. Django
 runtime tests and visual viewport checks remain **pending** until run in a
 suitable environment. The GitHub Pages prototype is unchanged.
+
+
+## Cross-page source review — 8 November 2026
+
+The three-page source review identified two UI issues and corrected them:
+
+- **Mobile menu visibility:** the author CSS `.dc-mobile-nav { display: grid; }`
+  overrode browser-native hiding of a closed `<details>` menu.
+  An explicit `.dc-mobile-menu:not([open]) > .dc-mobile-nav { display: none; }`
+  rule restores collapsed behaviour. The issue was reproduced in Chromium
+  using an isolated HTML/CSS reproduction, not by running Django.
+- **Tablet navigation width:** the full desktop navigation gained five links
+  and would risk overflow at 768 px. Its display breakpoint is now 1200 px;
+  narrower viewports use the native mobile disclosure control.
+- **Overview first action:** `Explore repositories` redirected anonymous
+  visitors to staff login. The primary action now opens the public-safe
+  `/tasks/` demo. Staff inventory remains available from navigation.
+
+`backend/scripts/test_frontend_contract.py` adds standard-library checks
+for these source contracts, and the Django home assertions were extended.
+These **do not** prove that Django renders correctly, the real frontend is
+visually correct on all devices, or that external Bootstrap/theme CSS loads.
+
+**Remaining runtime gates:** Django system checks, migrations, Django test
+suite, and real-browser inspection of `/`, `/tasks/` and `/agents/` after
+installing dependencies. The current execution environment has Chromium but
+cannot install Django because its package index is unreachable. A real
+viewport review should cover 320, 390, 768, 1024 and 1440 px, keyboard
+disclosure and focus states, and external CSS availability.
