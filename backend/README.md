@@ -58,6 +58,15 @@ repositories/
 └── templates/repositories/list.html
 ```
 
+## Guided installer with Python selection
+
+The optional [local installer](INSTALLER.md) discovers installed Python
+interpreters, shows compatible versions and their paths, and lets you select
+one interactively. Use `python3 backend/scripts/setup_local.py` from the
+repository root (or `py -3.13 backend/scripts/setup_local.py` on Windows).
+It uses only `backend/.venv`, calls the existing verifier and reports the first
+failed stage. The manual setup instructions below remain available.
+
 ## Set up on Linux
 
 From the repository root:
