@@ -10,7 +10,8 @@
 4. [Set up on Windows PowerShell](#set-up-on-windows-powershell)
 5. [Routes and tests](#routes-and-tests)
 6. [Vanilla conventions and deviations](#vanilla-conventions-and-deviations)
-7. [Security and next steps](#security-and-next-steps)
+7. [Local repository inventory](#local-repository-inventory)
+8. [Security and next steps](#security-and-next-steps)
 
 ## Purpose
 
@@ -42,6 +43,18 @@ backend/
     ├── urls.py
     ├── migrations/__init__.py
     └── templates/dashboard/home.html
+repositories/
+├── __init__.py
+├── admin.py
+├── apps.py
+├── models.py
+├── tests.py
+├── views.py
+├── urls.py
+├── migrations/
+│   ├── __init__.py
+│   └── 0001_initial.py
+└── templates/repositories/list.html
 ```
 
 ## Set up on Linux
@@ -66,7 +79,7 @@ python manage.py test
 python manage.py runserver 127.0.0.1:8000
 ```
 
-Navigate to http://127.0.0.1:8000/ (the Django landing page), or http://127.0.0.1:8000/admin/ (Django's built-in admin). On first launch, the application does not create any custom database models. `migrate` applies Django's built-in migrations only.
+Navigate to http://127.0.0.1:8000/ (the Django landing page), or http://127.0.0.1:8000/admin/ (Django's built-in admin). The `repositories` app has one project-owned database model. `migrate` applies Django's standard migrations plus `repositories/0001_initial.py`. Create a local admin account with `python manage.py createsuperuser` to enter and inspect inventory records.
 
 **No inbound port forwarding is necessary** to run these local development steps.
 
@@ -98,16 +111,17 @@ A sample `.env.example` describes the variables, but **Django does not read it a
 | --- | --- | --- |
 | `/` | `dashboard.urls` → `dashboard.views.home` | Template-only landing page |
 | `/admin/` | `django.contrib.admin` | Standard Django admin with default authentication |
+| `/repositories/` | `repositories.urls` → `repositories.views.repository_list` | Staff-only local inventory; no GitHub requests |
 
-Two small `SimpleTestCase` checks verify the home template/content and that Django's built-in admin redirects unauthenticated visitors to its login. They require no custom database tables.
+The original `SimpleTestCase` checks verify the home template/content and admin login redirect. Separate `repositories/tests.py` database tests cover model validation, the empty state, staff access, and denial for anonymous/non-staff users.
 
-Run `python manage.py test` to execute them. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
+Run `python manage.py makemigrations --check --dry-run` to verify migration consistency, followed by `python manage.py test`. **Validation status:** `check`, `migrate`, `test`, and browser rendering still require a Python environment with Django installed; the scaffold has not passed these runtime gates yet. Run `python manage.py check --deploy` **only as a diagnostic** before attempting any deployment; the foundation is not production-ready.
 
 The dependency range permits later security patch releases within Django 5.2 LTS, and its minimum is set to **5.2.19** (security release of 3 November 2026). The boilerplate header in `settings.py` intentionally records the **5.2.8** template version used to generate the original scaffold; a maintenance upgrade does not replace its vanilla comments.
 
 ## Vanilla conventions and deviations
 
-All generated project files retain their standard names, ordering and Django-generated comments. `dashboard/admin.py` and `dashboard/models.py` are intentionally empty apart from their conventional imports and placeholder comments. `migrations/__init__.py` exists.
+All generated project files retain their standard names, ordering and Django-generated comments. `dashboard/admin.py` and `dashboard/models.py` remain intentionally empty apart from conventional imports and placeholder comments. The new `repositories` app uses the standard Django app file layout and has its own initial migration.
 
 The deliberately small deviations are:
 
@@ -115,7 +129,20 @@ The deliberately small deviations are:
 - `config/urls.py`: adds the root URL include.
 - `dashboard/urls.py`, a short view, a template and a test: make the first app usable and verifiable.
 
-Settings retain **SQLite as Django's development default**. We will decide durable runtime storage later, instead of prematurely adding PostgreSQL/Redis/Docker to an empty scaffold.
+Settings register the additional `repositories` app while preserving Django's generated settings sections and comments. They retain **SQLite as Django's development default**. We will decide durable runtime storage later, instead of prematurely adding PostgreSQL/Redis/Docker to an empty scaffold.
+
+## Local repository inventory
+
+This is the first small application feature toward FR-01; it **does not implement authorisation for agent execution**.
+
+1. Run `python manage.py migrate` in a local Django environment.
+2. Run `python manage.py createsuperuser` and log in at `http://127.0.0.1:8000/admin/`.
+3. Add a record under **Repositories** using a GitHub `owner/repo` name, optional description and inventory status.
+4. Open `http://127.0.0.1:8000/repositories/` to browse the records. Only authenticated, active staff users can access the page.
+
+Inventory statuses (`candidate`, `tracked`, `archived`) are **descriptive only**. Marking a repository as tracked does not authorise cloning, execution, data access, or use by an agent. No GitHub token or API call is required. Do not enter confidential repository identifiers in an environment exposed to unauthorised users.
+
+The Django page loads the existing public Glassmorphism Pro theme stylesheet. The public GitHub Pages demo is unchanged and cannot read the local SQLite inventory.
 
 ## Security and next steps
 

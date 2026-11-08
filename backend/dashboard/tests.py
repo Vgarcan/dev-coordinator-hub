@@ -13,6 +13,7 @@ class DashboardHomeTests(SimpleTestCase):
         self.assertContains(response, 'Django foundation ready')
         self.assertContains(response, 'Not connected to agents')
         self.assertTemplateUsed(response, 'dashboard/home.html')
+        self.assertContains(response, reverse('repositories:list'))
 
     def test_admin_requires_authentication(self):
         """The standard Django admin must not expose its index anonymously."""

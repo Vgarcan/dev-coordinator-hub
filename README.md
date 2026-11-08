@@ -2,7 +2,7 @@
 
 An auditable, human-supervised development coordinator: plan work in ChatGPT, exchange authorised tasks through **private GitHub**, and run bounded Codex CLI / Claude Code jobs on a headless Linux server.
 
-**Current status: documentation and public UI prototype only.** No coordinator backend, agent runtime or secure command channel is deployed.
+**Current status: documentation, public UI prototype and local Django foundation with a staff-only repository inventory.** No agent runtime, private control channel or operational coordinator is deployed.
 
 > **Public-repository boundary:** this repository and its GitHub Pages demo are public. They must never be used for real agent instructions, confidential repo information, credentials, live audit logs, execution authorisations or operational payloads.
 
@@ -32,6 +32,7 @@ The page is a **simulated, mobile-first mock-up** with fictional repositories, a
 - [Task protocol](docs/TASK_PROTOCOL.md) — proposed private task and review lifecycle.
 - [ChatGPT–agent collaboration](docs/CHATGPT_AGENT_COLLABORATION.md) — how ChatGPT plans, recommends, delegates and supervises.
 - [Model selection and budget policy](docs/MODEL_SELECTION_POLICY.md) — verified model choice, reasoning depth and efficiency.
+- [Django backend setup](backend/README.md) — local development, Django Admin and a staff-only repository inventory.
 - [Decision register](docs/DECISIONS.md) and [risk register](docs/RISKS.md).
 - [Security](docs/SECURITY.md).
 - [Codex project instructions](AGENTS.md) and [Claude Code project instructions](CLAUDE.md) — small agent briefs; they do **not** replace enforced runtime security.

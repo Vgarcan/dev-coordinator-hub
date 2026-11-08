@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # First project-owned application; keep Django's standard app structure.
     'dashboard.apps.DashboardConfig',
+    # Separate app for the local, read-only repository inventory.
+    'repositories.apps.RepositoriesConfig',
 ]
 
 MIDDLEWARE = [

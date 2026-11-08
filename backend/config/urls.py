@@ -19,6 +19,8 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Staff-only inventory. This route cannot dispatch work to agents.
+    path('repositories/', include('repositories.urls')),
     # App routing lives with its app, keeping the generated project URLconf simple.
     path('', include('dashboard.urls')),
 ]
